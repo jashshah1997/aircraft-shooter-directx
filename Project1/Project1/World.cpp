@@ -19,18 +19,26 @@ void World::command(const int playerCommand)
 	case PlayerCommand::FORWARD:
 		mPlayerAircraft->setVelocity(0, 0, mPlayerVelocity);
 		break;
+
 	case PlayerCommand::BACK:
 		mPlayerAircraft->setVelocity(0, 0, - mPlayerVelocity);
 		break;
+
 	case PlayerCommand::LEFT:
 		mPlayerAircraft->setVelocity(- mPlayerVelocity, 0, 0);
 		break;
+
 	case PlayerCommand::RIGHT:
 		mPlayerAircraft->setVelocity(mPlayerVelocity, 0, 0);
 		break;
+
+	case PlayerCommand::SHOOT:
+		break;
+
 	case PlayerCommand::NONE:
 		mPlayerAircraft->setVelocity(0, 0, 0);
 		break;
+
 	default:
 		break;
 	}
@@ -77,7 +85,7 @@ void World::buildScene()
 	//raptor->setVelocity(-mScrollSpeed, 0);
 	mSceneGraph->attachChild(std::move(enemy2));
 
-	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame));
+	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "Desert", true));
 	mBackground = (SpriteNode*)backgroundSprite.get();
 	//mBackground->setPosition(mWorldBounds.left, mWorldBounds.top);
 	mBackground->setPosition(0, 0, 2.0);
@@ -85,13 +93,20 @@ void World::buildScene()
 	mBackground->setVelocity(0, 0, -mScrollSpeed);
 	mSceneGraph->attachChild(std::move(backgroundSprite));
 
-	std::unique_ptr<SpriteNode> backgroundSprite2(new SpriteNode(mGame));
+	std::unique_ptr<SpriteNode> backgroundSprite2(new SpriteNode(mGame , "Desert", true));
 	mBackground2 = (SpriteNode*)backgroundSprite2.get();
 	//mBackground->setPosition(mWorldBounds.left, mWorldBounds.top);
 	mBackground2->setPosition(0, 0, mBackground->getWorldPosition().z + 10);
 	mBackground2->setScale(1.0, 1.0, 1);
 	mBackground2->setVelocity(0, 0, -mScrollSpeed);
 	mSceneGraph->attachChild(std::move(backgroundSprite2));
+
+	std::unique_ptr<SpriteNode> bulletSprite(new SpriteNode(mGame, "Bullet", false));
+	auto mbulletSprite = (SpriteNode*)bulletSprite.get();
+	mbulletSprite->setPosition(0, 0.5, 2.0);
+	mbulletSprite->setScale(0.01, 1.0, 0.01);
+	mbulletSprite->setVelocity(0, 0, -mScrollSpeed);
+	mSceneGraph->attachChild(std::move(bulletSprite));
 
 	mSceneGraph->build();
 }

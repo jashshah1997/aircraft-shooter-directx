@@ -381,6 +381,16 @@ void Game::LoadTextures()
 		DesertTex->Resource, DesertTex->UploadHeap));
 
 	mTextures[DesertTex->Name] = std::move(DesertTex);
+
+	//Bullet
+	auto BulletTex = std::make_unique<Texture>();
+	BulletTex->Name = "BulletTex";
+	BulletTex->Filename = L"../../Textures/Bullet.dds";
+	ThrowIfFailed(DirectX::CreateDDSTextureFromFile12(md3dDevice.Get(),
+		mCommandList.Get(), BulletTex->Filename.c_str(),
+		BulletTex->Resource, BulletTex->UploadHeap));
+
+	mTextures[BulletTex->Name] = std::move(BulletTex);
 }
 
 void Game::BuildRootSignature()
@@ -446,6 +456,7 @@ void Game::BuildDescriptorHeaps()
 	auto EagleTex = mTextures["EagleTex"]->Resource;
 	auto RaptorTex = mTextures["RaptorTex"]->Resource;
 	auto DesertTex = mTextures["DesertTex"]->Resource;
+	auto BulletTex = mTextures["BulletTex"]->Resource;
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 
@@ -481,6 +492,10 @@ void Game::BuildDescriptorHeaps()
 	srvDesc.Format = DesertTex->GetDesc().Format;
 	md3dDevice->CreateShaderResourceView(DesertTex.Get(), &srvDesc, hDescriptor);
 
+	//Bullet Descriptor
+	hDescriptor.Offset(1, mCbvSrvDescriptorSize);
+	srvDesc.Format = BulletTex->GetDesc().Format;
+	md3dDevice->CreateShaderResourceView(BulletTex.Get(), &srvDesc, hDescriptor);
 }
 
 void Game::BuildShadersAndInputLayout()
@@ -621,6 +636,16 @@ void Game::BuildMaterials()
 	Desert->Roughness = 0.2f;
 
 	mMaterials["Desert"] = std::move(Desert);
+
+	auto Bullet = std::make_unique<Material>();
+	Bullet->Name = "Bullet";
+	Bullet->MatCBIndex = 3;
+	Bullet->DiffuseSrvHeapIndex = 3;
+	Bullet->DiffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	Bullet->FresnelR0 = XMFLOAT3(0.05f, 0.05f, 0.05f);
+	Bullet->Roughness = 0.2f;
+
+	mMaterials["Bullet"] = std::move(Bullet);
 
 }
 
