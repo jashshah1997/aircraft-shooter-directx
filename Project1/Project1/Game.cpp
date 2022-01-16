@@ -187,45 +187,57 @@ void Game::OnKeyboardInput(const GameTimer& gt)
 	XMFLOAT3  oppositef3(-1, -1, -1);
 	XMVECTOR opposite = XMLoadFloat3(&oppositef3);
 
+	bool isKeyPressed = false;
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
+		isKeyPressed = true;
 		bool hit = false;
 
 		if (!hit)
 		{
-			mCamera.Walk(10.0f * dt);
-
+			// mCamera.Walk(10.0f * dt);
+			mWorld.command(PlayerCommand::FORWARD);
 		}
 	}
 
 	if (GetAsyncKeyState('S') & 0x8000)
 	{
+		isKeyPressed = true;
 		bool hit = false;
 		if (!hit)
 		{
-			mCamera.Walk(-10.0f * dt);
+			// mCamera.Walk(-10.0f * dt);
+			mWorld.command(PlayerCommand::BACK);
 		}
 
 	}
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
+		isKeyPressed = true;
 		bool hit = false;
 		if (!hit)
 		{
-			mCamera.Strafe(-10.0f * dt);
+			// mCamera.Strafe(-10.0f * dt);
+			mWorld.command(PlayerCommand::LEFT);
 		}
 
 
 	}
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
+		isKeyPressed = true;
 		bool hit = false;
 		if (!hit)
 		{
-			mCamera.Strafe(10.0f * dt);
+			// mCamera.Strafe(10.0f * dt);
+			mWorld.command(PlayerCommand::RIGHT);
 		}
 	}
 
+	if (!isKeyPressed)
+	{
+		mWorld.command(PlayerCommand::NONE);
+	}
 
 	mCamera.UpdateViewMatrix();
 }

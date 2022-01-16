@@ -7,8 +7,33 @@ World::World(Game* game)
 	, mBackground(nullptr)
 	, mWorldBounds(0.f, 0.f, 600.f, 2000.f)
 	, mSpawnPosition(0.f, 0.f)
-	, mScrollSpeed(1.f)		
+	, mScrollSpeed(1.f)
+	, mPlayerVelocity(10.f)
 {
+}
+
+void World::command(const int playerCommand)
+{
+	switch (playerCommand)
+	{
+	case PlayerCommand::FORWARD:
+		mPlayerAircraft->setVelocity(0, 0, mPlayerVelocity);
+		break;
+	case PlayerCommand::BACK:
+		mPlayerAircraft->setVelocity(0, 0, - mPlayerVelocity);
+		break;
+	case PlayerCommand::LEFT:
+		mPlayerAircraft->setVelocity(- mPlayerVelocity, 0, 0);
+		break;
+	case PlayerCommand::RIGHT:
+		mPlayerAircraft->setVelocity(mPlayerVelocity, 0, 0);
+		break;
+	case PlayerCommand::NONE:
+		mPlayerAircraft->setVelocity(0, 0, 0);
+		break;
+	default:
+		break;
+	}
 }
 
 void World::update(const GameTimer& gt)
@@ -24,7 +49,6 @@ void World::draw()
 	auto backgroundPos2 = mBackground2->getWorldPosition();
 
 	if (backgroundPos.z < -10) mBackground->setPosition(0, 0, backgroundPos2.z + 10);
-
 	if (backgroundPos2.z < -10) mBackground2->setPosition(0, 0, backgroundPos.z + 10);
 }
 
