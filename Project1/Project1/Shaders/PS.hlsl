@@ -1,4 +1,3 @@
-
 struct VertexOut
 {
 	float4 PosH  : SV_POSITION;
@@ -7,5 +6,5 @@ struct VertexOut
 
 float4 PS(VertexOut pin) : SV_Target
 {
-	return pin.Color;
+    return pin.Color;
 }
