@@ -19,6 +19,13 @@ void World::update(const GameTimer& gt)
 void World::draw()
 {
 	mSceneGraph->draw();
+
+	auto backgroundPos = mBackground->getWorldPosition();
+	auto backgroundPos2 = mBackground2->getWorldPosition();
+
+	if (backgroundPos.z < -10) mBackground->setPosition(0, 0, backgroundPos2.z + 10);
+
+	if (backgroundPos2.z < -10) mBackground2->setPosition(0, 0, backgroundPos.z + 10);
 }
 
 void World::buildScene()
@@ -53,6 +60,14 @@ void World::buildScene()
 	mBackground->setScale(1.0, 1.0, 1);
 	mBackground->setVelocity(0, 0, -mScrollSpeed);
 	mSceneGraph->attachChild(std::move(backgroundSprite));
+
+	std::unique_ptr<SpriteNode> backgroundSprite2(new SpriteNode(mGame));
+	mBackground2 = (SpriteNode*)backgroundSprite2.get();
+	//mBackground->setPosition(mWorldBounds.left, mWorldBounds.top);
+	mBackground2->setPosition(0, 0, mBackground->getWorldPosition().z + 10);
+	mBackground2->setScale(1.0, 1.0, 1);
+	mBackground2->setVelocity(0, 0, -mScrollSpeed);
+	mSceneGraph->attachChild(std::move(backgroundSprite2));
 
 	mSceneGraph->build();
 }
