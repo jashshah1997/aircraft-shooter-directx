@@ -275,7 +275,7 @@ void TriangleAPP::BuildTriangleGeometry()
 			Vertex({ XMFLOAT3(+0.0f, +0.5f, 0.0f) }),
 			Vertex({ XMFLOAT3(+0.5f, -0.5f, 0.0f) }),
 		};
-	
+
 	const UINT vbBufferSize = (UINT)vertices.size() * sizeof(Vertex);
 
 	// Note: using upload heaps to transfer static data like vert buffers is not 

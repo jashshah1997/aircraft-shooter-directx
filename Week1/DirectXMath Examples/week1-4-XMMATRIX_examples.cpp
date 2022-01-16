@@ -37,14 +37,18 @@ ostream& XM_CALLCONV operator << (ostream& os, FXMVECTOR v)
 
 ostream& XM_CALLCONV operator << (ostream& os, FXMMATRIX m)
 {
-	for (int i = 0; i < 4; ++i)
+	XMFLOAT4X4 dest;
+	XMStoreFloat4x4(&dest, m);
+
+	for (int i = 0; i < 4; i++)
 	{
-		os << XMVectorGetX(m.r[i]) << "\t";
-		os << XMVectorGetY(m.r[i]) << "\t";
-		os << XMVectorGetZ(m.r[i]) << "\t";
-		os << XMVectorGetW(m.r[i]);
+		for (int j = 0; j < 4; j++)
+		{
+			os << dest.m[i][j] << "\t";
+		}
 		os << endl;
 	}
+
 	return os;
 }
 

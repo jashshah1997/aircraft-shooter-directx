@@ -104,7 +104,7 @@ void InitDirect3DApp::Draw(const GameTimer& gt)
 	//mCommandList->ClearRenderTargetView(CurrentBackBufferView(), Colors::LightSteelBlue, 0, nullptr);
 	//Hooman Step1:
 	const float color[] = { 1.0,1.0,0.0,1.0 };
-	const float c = sin(mTimer.TotalTime());
+	const float c = (cos(mTimer.TotalTime()) + 1) / 2;
 	const float color2[] = { c,c,1.0,1.0 };
 	mCommandList->ClearRenderTargetView(CurrentBackBufferView(), color2, 0, nullptr);
 

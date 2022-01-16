@@ -36,6 +36,9 @@ int main()
 		cout << "directx math not supported" << endl;
 		return 0;
 	}
-
+	else
+	{
+		cout << "everything is good!" << endl;
+	}
 	return 0;
 }
