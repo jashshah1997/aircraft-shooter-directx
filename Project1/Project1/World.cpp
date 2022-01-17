@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include <random>
 
 World::World(Game* game)
 	: mSceneGraph(new SceneNode(game))
@@ -10,6 +11,7 @@ World::World(Game* game)
 	, mScrollSpeed(1.f)
 	, mPlayerVelocity(10.f)
 {
+
 }
 
 void World::command(const int playerCommand)
@@ -64,15 +66,46 @@ void World::update(const GameTimer& gt)
 		if (bulletPos.z > 20) {
 			bullet->setActive(false);
 		}
-	}
 
-	for (auto* bullet : mBulletSpriteVector)
-	{
+		auto pos = mPlayerAircraft->getWorldPosition();
 		if (!bullet->isActive())
 		{
-			auto pos = mPlayerAircraft->getWorldPosition();
 			bullet->setPosition(pos.x, 0.01, pos.z - 0.5);
 		}
+
+		auto raptorPos = mEnemy->getWorldPosition();
+		if (bullet->isActive() &&
+			sqrt((bulletPos.x - raptorPos.x) * (bulletPos.x - raptorPos.x) + (bulletPos.z - raptorPos.z) * (bulletPos.z - raptorPos.z)) < 0.5 && 
+			raptorPos.y > 0)
+		{
+			mEnemy->setVelocity(0, - 2 * mScrollSpeed, 0);
+			bullet->setActive(false);
+		}
+
+		auto raptorPos2 = mEnemy2->getWorldPosition();
+		if (bullet->isActive() &&
+			sqrt((bulletPos.x - raptorPos2.x) * (bulletPos.x - raptorPos2.x) + (bulletPos.z - raptorPos2.z) * (bulletPos.z - raptorPos2.z)) < 0.5 &&
+			raptorPos2.y > 0)
+		{
+			mEnemy2->setVelocity(0, -2 * mScrollSpeed, 0);
+			bullet->setActive(false);
+		}
+	}
+
+	if (mEnemy->getWorldPosition().y < -2) {
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> distr(-5, 5);
+		mEnemy->setPosition(distr(gen), 0.5, distr(gen));
+		mEnemy->setVelocity(0, 0, 0);
+	}
+
+	if (mEnemy2->getWorldPosition().y < -2) {
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::uniform_int_distribution<> distr(-5, 5);
+		mEnemy2->setPosition(distr(gen), 0.5, distr(gen));
+		mEnemy2->setVelocity(0, 0, 0);
 	}
 }
 
@@ -91,19 +124,19 @@ void World::buildScene()
 {
 
 	std::unique_ptr<Aircraft> enemy(new Aircraft(Aircraft::Raptor, mGame));
-	auto raptor = (Aircraft*)enemy.get();
-	raptor->setPosition(2, 0.2, 0);
-	raptor->setScale(0.1, 0.1, 0.1);
-	raptor->setWorldRotation(0.0f, XM_PI, 0.0f);
+	mEnemy = (Aircraft*)enemy.get();
+	mEnemy->setPosition(2, 0.5, 0);
+	mEnemy->setScale(0.1, 0.1, 0.1);
+	mEnemy->setWorldRotation(0.0f, XM_PI, 0.0f);
 	//raptor->setVelocity(-mScrollSpeed, 0);
 	mSceneGraph->attachChild(std::move(enemy));
 
 	std::unique_ptr<Aircraft> enemy2(new Aircraft(Aircraft::Raptor, mGame));
-	auto raptor2 = (Aircraft*)enemy2.get();
-	raptor2->setPosition(-2, 0.2, 0);
-	raptor2->setScale(0.1, 0.1, 0.1);
-	raptor2->setWorldRotation(0.0f, XM_PI, 0.0f);
-	//raptor->setVelocity(-mScrollSpeed, 0);
+	mEnemy2 = (Aircraft*)enemy2.get();
+	mEnemy2->setPosition(-2, 0.5, 0);
+	mEnemy2->setScale(0.1, 0.1, 0.1);
+	mEnemy2->setWorldRotation(0.0f, XM_PI, 0.0f);
+	// mEnemy2->setVelocity(0, -5 * mScrollSpeed, 0);
 	mSceneGraph->attachChild(std::move(enemy2));
 
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(mGame, "Desert", true));

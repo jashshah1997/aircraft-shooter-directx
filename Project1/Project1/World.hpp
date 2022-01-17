@@ -46,8 +46,9 @@ private:
 	float								mScrollSpeed;
 	float								mPlayerVelocity;
 	Aircraft*							mPlayerAircraft;
+	Aircraft*						    mEnemy;
+	Aircraft*							mEnemy2;
 	SpriteNode*							mBackground;
 	SpriteNode*							mBackground2;
 	std::vector<SpriteNode*>            mBulletSpriteVector;
-	Aircraft*							mEnemy;
 };
