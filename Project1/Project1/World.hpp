@@ -48,5 +48,6 @@ private:
 	Aircraft*							mPlayerAircraft;
 	SpriteNode*							mBackground;
 	SpriteNode*							mBackground2;
+	std::vector<SpriteNode*>            mBulletSpriteVector;
 	Aircraft*							mEnemy;
 };

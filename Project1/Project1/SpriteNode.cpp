@@ -5,12 +5,23 @@ SpriteNode::SpriteNode(Game* game, std::string name, bool scale) : Entity(game)
 {
 	mName = name;
 	mScale = scale;
+	mActive = true;
+}
+
+void SpriteNode::setActive(bool flag)
+{
+	mActive = flag;
 }
 
 void SpriteNode::drawCurrent() const
 {
 	renderer->World = getTransform();
 	renderer->NumFramesDirty++;
+}
+
+bool SpriteNode::isActive()
+{
+	return mActive;
 }
 
 void SpriteNode::buildCurrent()

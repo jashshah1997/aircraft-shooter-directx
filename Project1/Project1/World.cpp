@@ -33,6 +33,16 @@ void World::command(const int playerCommand)
 		break;
 
 	case PlayerCommand::SHOOT:
+		for (auto* bullet : mBulletSpriteVector)
+		{
+			if (!bullet->isActive())
+			{
+				bullet->setActive(true);
+				bullet->setVelocity(0, 0, mPlayerVelocity);
+				break;
+			}
+		}
+		
 		break;
 
 	case PlayerCommand::NONE:
@@ -47,12 +57,29 @@ void World::command(const int playerCommand)
 void World::update(const GameTimer& gt)
 {
 	mSceneGraph->update(gt);
+	
+	for (auto* bullet : mBulletSpriteVector)
+	{
+		auto bulletPos = bullet->getWorldPosition();
+		if (bulletPos.z > 20) {
+			bullet->setActive(false);
+		}
+	}
+
+	for (auto* bullet : mBulletSpriteVector)
+	{
+		if (!bullet->isActive())
+		{
+			auto pos = mPlayerAircraft->getWorldPosition();
+			bullet->setPosition(pos.x, 0.01, pos.z - 0.5);
+		}
+	}
 }
 
 void World::draw()
 {
 	mSceneGraph->draw();
-
+	
 	auto backgroundPos = mBackground->getWorldPosition();
 	auto backgroundPos2 = mBackground2->getWorldPosition();
 
@@ -62,12 +89,6 @@ void World::draw()
 
 void World::buildScene()
 {
-	std::unique_ptr<Aircraft> player(new Aircraft(Aircraft::Eagle, mGame));
-	mPlayerAircraft = (Aircraft*)player.get();
-	mPlayerAircraft->setPosition(0, 0.1, -1.0);
-	mPlayerAircraft->setScale(0.1, 0.1, 0.1);
-	// mPlayerAircraft->setVelocity(0.0, 0, mScrollSpeed);
-	mSceneGraph->attachChild(std::move(player));
 
 	std::unique_ptr<Aircraft> enemy(new Aircraft(Aircraft::Raptor, mGame));
 	auto raptor = (Aircraft*)enemy.get();
@@ -101,12 +122,23 @@ void World::buildScene()
 	mBackground2->setVelocity(0, 0, -mScrollSpeed);
 	mSceneGraph->attachChild(std::move(backgroundSprite2));
 
-	std::unique_ptr<SpriteNode> bulletSprite(new SpriteNode(mGame, "Bullet", false));
-	auto mbulletSprite = (SpriteNode*)bulletSprite.get();
-	mbulletSprite->setPosition(0, 0.5, 2.0);
-	mbulletSprite->setScale(0.01, 1.0, 0.01);
-	mbulletSprite->setVelocity(0, 0, -mScrollSpeed);
-	mSceneGraph->attachChild(std::move(bulletSprite));
+	for (int i = 0; i < 10; i++)
+	{
+		SpriteNode* mBulletSprite = new SpriteNode(mGame, "Bullet", false);
+		mBulletSprite->setPosition(0, 0.05, -1.0);
+		mBulletSprite->setScale(0.01, 1.0, 0.01);
+		//mBulletSprite->setVelocity(0, 0, -mScrollSpeed);
+		mBulletSprite->setActive(false);
+		mSceneGraph->attachChild(std::unique_ptr<SceneNode>(mBulletSprite));
+		mBulletSpriteVector.push_back(mBulletSprite);
+	}
+	
+	std::unique_ptr<Aircraft> player(new Aircraft(Aircraft::Eagle, mGame));
+	mPlayerAircraft = (Aircraft*)player.get();
+	mPlayerAircraft->setPosition(0, 1, -1.0);
+	mPlayerAircraft->setScale(0.1, 0.2, 0.1);
+	// mPlayerAircraft->setVelocity(0.0, 0, mScrollSpeed);
+	mSceneGraph->attachChild(std::move(player));
 
 	mSceneGraph->build();
 }
