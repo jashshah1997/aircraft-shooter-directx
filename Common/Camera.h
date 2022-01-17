@@ -1,12 +1,12 @@
-//***************************************************************************************
-// Camera.h 
-//   
-// Simple first person style camera class that lets the viewer explore the 3D scene.
-//   -It keeps track of the camera coordinate system relative to the world space
-//    so that the view matrix can be constructed.  
-//   -It keeps track of the viewing frustum of the camera so that the projection
-//    matrix can be obtained.
-//***************************************************************************************
+//!***************************************************************************************
+//! Camera.h 
+//!   
+//! Simple first person style camera class that lets the viewer explore the 3D scene.
+//!   -It keeps track of the camera coordinate system relative to the world space
+//!    so that the view matrix can be constructed.  
+//!   -It keeps track of the viewing frustum of the camera so that the projection
+//!    matrix can be obtained.
+//!***************************************************************************************
 
 #ifndef CAMERA_H
 #define CAMERA_H

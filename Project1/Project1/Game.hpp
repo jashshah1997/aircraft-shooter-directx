@@ -1,5 +1,15 @@
 #include "World.hpp"
 
+//!
+//! A Space Shooter game.
+//! Author Jash Shah.
+//!
+//! Shoot enemy spaceships appearing from the desert sand.
+//!
+//! Controls:
+//!   W, A, S, D to move the player spaceship.
+//!   Left click to fire bullets.
+//!
 class Game : public D3DApp
 {
 public:

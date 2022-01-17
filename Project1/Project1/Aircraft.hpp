@@ -2,6 +2,8 @@
 #include "Entity.hpp"
 #include <string>
 
+//! Aircraft class specifies how the aircraft sprites look like.
+//! There are 2 options, an Eagle (player) or a Raptor (enemy) aircraft designs. 
 class Aircraft :
     public Entity
 {

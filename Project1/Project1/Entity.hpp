@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneNode.hpp"
 
+//! A base class all game objects are derived from.
 class Entity :
     public SceneNode
 {

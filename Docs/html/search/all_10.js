@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['quatapp_0',['QuatApp',['../class_quat_app.html',1,'QuatApp'],['../class_quat_app.html#a1b4aeaa50eea24638967387379c744ae',1,'QuatApp::QuatApp(HINSTANCE hInstance)'],['../class_quat_app.html#aadd4be970011026101e11c209ad1089f',1,'QuatApp::QuatApp(const QuatApp &amp;rhs)=delete']]],
-  ['quatapp_2ecpp_1',['QuatApp.cpp',['../_quat_app_8cpp.html',1,'']]]
+  ['world_0',['World',['../class_world.html',1,'World'],['../struct_render_item.html#a2e0a651d0ad4ba7975455e22fbde1a28',1,'RenderItem::World()']]]
 ];
