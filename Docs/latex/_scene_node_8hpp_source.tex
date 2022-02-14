@@ -1,4 +1,5 @@
 \hypertarget{_scene_node_8hpp_source}{}\doxysection{Scene\+Node.\+hpp}
+\label{_scene_node_8hpp_source}\index{Project1/Project1/SceneNode.hpp@{Project1/Project1/SceneNode.hpp}}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
@@ -28,8 +29,8 @@
 \DoxyCodeLine{34 }
 \DoxyCodeLine{36     UINT \mbox{\hyperlink{struct_render_item_a4a4015284acd79469b70c358b6c1c2a1}{ObjCBIndex}} = -\/1;}
 \DoxyCodeLine{37 }
-\DoxyCodeLine{38     Material* Mat = \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{39     MeshGeometry* Geo = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{38     \mbox{\hyperlink{struct_material}{Material}}* Mat = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{39     \mbox{\hyperlink{struct_mesh_geometry}{MeshGeometry}}* Geo = \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{40 }
 \DoxyCodeLine{42     D3D12\_PRIMITIVE\_TOPOLOGY \mbox{\hyperlink{struct_render_item_ab3aad9050526250c4877956789e50b3a}{PrimitiveType}} = D3D11\_PRIMITIVE\_TOPOLOGY\_TRIANGLELIST;}
 \DoxyCodeLine{43 }
@@ -52,7 +53,7 @@
 \DoxyCodeLine{61     \textcolor{keywordtype}{void}                    attachChild(Ptr child);}
 \DoxyCodeLine{62     Ptr                     detachChild(\textcolor{keyword}{const} \mbox{\hyperlink{class_scene_node}{SceneNode}}\& node);}
 \DoxyCodeLine{63 }
-\DoxyCodeLine{64     \textcolor{keywordtype}{void}                    update(\textcolor{keyword}{const} GameTimer\& gt);}
+\DoxyCodeLine{64     \textcolor{keywordtype}{void}                    update(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
 \DoxyCodeLine{65     \textcolor{keywordtype}{void}                    draw() \textcolor{keyword}{const};}
 \DoxyCodeLine{66     \textcolor{keywordtype}{void}                    build();}
 \DoxyCodeLine{67 }
@@ -68,8 +69,8 @@
 \DoxyCodeLine{77 }
 \DoxyCodeLine{78     \textcolor{keywordtype}{void}                    move(\textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z);}
 \DoxyCodeLine{79 \textcolor{keyword}{private}:}
-\DoxyCodeLine{80     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}            updateCurrent(\textcolor{keyword}{const} GameTimer\& gt);}
-\DoxyCodeLine{81     \textcolor{keywordtype}{void}                    updateChildren(\textcolor{keyword}{const} GameTimer\& gt);}
+\DoxyCodeLine{80     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}            updateCurrent(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
+\DoxyCodeLine{81     \textcolor{keywordtype}{void}                    updateChildren(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
 \DoxyCodeLine{82 }
 \DoxyCodeLine{83     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}            drawCurrent() \textcolor{keyword}{const};}
 \DoxyCodeLine{84     \textcolor{keywordtype}{void}                    drawChildren() \textcolor{keyword}{const};}

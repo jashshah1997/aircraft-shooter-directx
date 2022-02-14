@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['objcbindex_0',['ObjCBIndex',['../struct_render_item.html#a4a4015284acd79469b70c358b6c1c2a1',1,'RenderItem']]],
-  ['objectconstants_1',['ObjectConstants',['../struct_object_constants.html',1,'']]]
+  ['none_0',['NONE',['../class_player_command.html#ac3a549656982ac858387b42bf386ea7d',1,'PlayerCommand']]],
+  ['numframesdirty_1',['NumFramesDirty',['../struct_render_item.html#aca6ae2de91638af530fd5ce91fea3306',1,'RenderItem']]]
 ];

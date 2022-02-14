@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['objectconstants_0',['ObjectConstants',['../struct_object_constants.html',1,'']]]
+  ['frameresource_0',['FrameResource',['../struct_frame_resource.html',1,'']]]
 ];

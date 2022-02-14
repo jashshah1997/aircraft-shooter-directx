@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['world_0',['World',['../class_world.html',1,'World'],['../struct_render_item.html#a2e0a651d0ad4ba7975455e22fbde1a28',1,'RenderItem::World()']]]
+  ['update_0',['update',['../class_world.html#a36c003f54e14e022a360551af5e7923e',1,'World']]],
+  ['uploadbuffer_1',['UploadBuffer',['../class_upload_buffer.html',1,'']]]
 ];

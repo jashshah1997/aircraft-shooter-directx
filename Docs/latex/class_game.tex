@@ -22,18 +22,18 @@ Inheritance diagram for Game\+:\begin{figure}[H]
 \mbox{\Hypertarget{class_game_a9bda5763ea460634fef947be2530c8f5}\label{class_game_a9bda5763ea460634fef947be2530c8f5}} 
 \mbox{\hyperlink{class_game}{Game}} \& {\bfseries operator=} (const \mbox{\hyperlink{class_game}{Game}} \&rhs)=delete
 \item 
-\mbox{\Hypertarget{class_game_a16354d232327f6c21319713bf6983674}\label{class_game_a16354d232327f6c21319713bf6983674}} 
-virtual bool {\bfseries Initialize} () override
+virtual bool \mbox{\hyperlink{class_game_a16354d232327f6c21319713bf6983674}{Initialize}} () override
 \item 
 \mbox{\Hypertarget{class_game_aab13f3fdd19f7fec4d64922e36cf3088}\label{class_game_aab13f3fdd19f7fec4d64922e36cf3088}} 
 std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{struct_render_item}{Render\+Item}} $>$ $>$ \& {\bfseries get\+Render\+Items} ()
 \item 
 \mbox{\Hypertarget{class_game_a2ab854095110829c9fb607b8bf3b50e1}\label{class_game_a2ab854095110829c9fb607b8bf3b50e1}} 
-std\+::unordered\+\_\+map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Material $>$ $>$ \& {\bfseries get\+Materials} ()
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{struct_material}{Material}} $>$ $>$ \& {\bfseries get\+Materials} ()
 \item 
 \mbox{\Hypertarget{class_game_a8fecc6dedc120a94d9940ad5d7518242}\label{class_game_a8fecc6dedc120a94d9940ad5d7518242}} 
-std\+::unordered\+\_\+map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ Mesh\+Geometry $>$ $>$ \& {\bfseries get\+Geometries} ()
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{struct_mesh_geometry}{Mesh\+Geometry}} $>$ $>$ \& {\bfseries get\+Geometries} ()
 \end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
 
 
 \doxysubsection{Detailed Description}
@@ -43,7 +43,20 @@ Shoot enemy spaceships appearing from the desert sand.
 
 Controls\+: W, A, S, D to move the player spaceship. Left click to fire bullets. 
 
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_game_a16354d232327f6c21319713bf6983674}\label{class_game_a16354d232327f6c21319713bf6983674}} 
+\index{Game@{Game}!Initialize@{Initialize}}
+\index{Initialize@{Initialize}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{Initialize()}{Initialize()}}
+{\footnotesize\ttfamily bool Game\+::\+Initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{class_d3_d_app}{D3\+DApp}}.
+
+
+
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-Game.\+hpp\item 
-Game.\+cpp\end{DoxyCompactItemize}
+Project1/\+Project1/Game.\+hpp\item 
+Project1/\+Project1/Game.\+cpp\end{DoxyCompactItemize}

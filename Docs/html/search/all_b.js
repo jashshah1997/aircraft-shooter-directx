@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['passconstants_0',['PassConstants',['../struct_pass_constants.html',1,'']]],
-  ['playercommand_1',['PlayerCommand',['../class_player_command.html',1,'']]],
-  ['primitivetype_2',['PrimitiveType',['../struct_render_item.html#ab3aad9050526250c4877956789e50b3a',1,'RenderItem']]]
+  ['objcbindex_0',['ObjCBIndex',['../struct_render_item.html#a4a4015284acd79469b70c358b6c1c2a1',1,'RenderItem']]],
+  ['objectconstants_1',['ObjectConstants',['../struct_object_constants.html',1,'']]]
 ];
