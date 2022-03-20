@@ -58,6 +58,10 @@ void World::command(const int playerCommand)
 
 void World::update(const GameTimer& gt)
 {
+	// Forward commands to the scene graph 
+	while (!mInputCommandQueue.isEmpty())
+		mSceneGraph->onCommand(mInputCommandQueue.pop(), gt);
+
 	mSceneGraph->update(gt);
 	
 	for (auto* bullet : mBulletSpriteVector)
@@ -174,4 +178,10 @@ void World::buildScene()
 	mSceneGraph->attachChild(std::move(player));
 
 	mSceneGraph->build();
+}
+
+//! Get the input command queue
+InputCommandQueue& World::getInputCommandQueue()
+{
+	return mInputCommandQueue;
 }

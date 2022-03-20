@@ -2,6 +2,7 @@
 #include "SceneNode.hpp"
 #include "Aircraft.hpp"
 #include "SpriteNode.h"
+#include "InputCommandQueue.h"
 
 //! All the commands that are able to be issued by the player
 class PlayerCommand
@@ -43,9 +44,11 @@ public:
 
 	//void								loadTextures();
 
-	// Build game objects
+	//! Build game objects
 	void								buildScene();
 
+	//! Get the input command queue
+	InputCommandQueue&					getInputCommandQueue();
 
 private:
 	enum Layer
@@ -79,4 +82,7 @@ private:
 
 	//! Bullet pool
 	std::vector<SpriteNode*>            mBulletSpriteVector;
+
+	//! Input Command Queue
+	InputCommandQueue					mInputCommandQueue;
 };
