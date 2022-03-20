@@ -5,7 +5,7 @@
 #include "../../Common/GeometryGenerator.h"
 #include "../../Common/Camera.h"
 #include "FrameResource.h"
-#include "Category.h"
+#include "Command.h"
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
@@ -78,6 +78,7 @@ public:
 
 	void					move(float x, float y, float z);
 	virtual unsigned int	getCategory() const;
+	void					onCommand(const Command& command, const GameTimer& gt);
 private:
 	virtual void			updateCurrent(const GameTimer& gt);
 	void					updateChildren(const GameTimer& gt);

@@ -152,3 +152,11 @@ unsigned int SceneNode::getCategory() const
 {
 	return Category::Scene;
 }
+
+void SceneNode::onCommand(const Command& command, const GameTimer& gt)
+{
+	if (command.category & getCategory()) command.action(*this, gt);
+
+	for (Ptr& child : mChildren)
+		child->onCommand(command, gt);
+}
