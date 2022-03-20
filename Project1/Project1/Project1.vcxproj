@@ -32,6 +32,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="SpriteNode.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -46,9 +47,11 @@
     <ClInclude Include="..\..\Common\MathHelper.h" />
     <ClInclude Include="..\..\Common\UploadBuffer.h" />
     <ClInclude Include="Aircraft.hpp" />
+    <ClInclude Include="Category.h" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="FrameResource.h" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="SceneNode.hpp" />
     <ClInclude Include="SpriteNode.h" />
     <ClInclude Include="World.hpp" />
