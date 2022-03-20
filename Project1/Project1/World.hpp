@@ -69,7 +69,6 @@ private:
 
 	//! Player aircraft
 	Aircraft*							mPlayerAircraft;
-	float								mPlayerVelocity;
 
 	//! Active enemies
 	Aircraft*						    mEnemy;
@@ -82,6 +81,7 @@ private:
 
 	//! Bullet pool
 	std::vector<SpriteNode*>            mBulletSpriteVector;
+	float								mBulletVelocity;
 
 	//! Input Command Queue
 	InputCommandQueue					mInputCommandQueue;

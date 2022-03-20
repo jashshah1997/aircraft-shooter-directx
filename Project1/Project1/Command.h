@@ -8,8 +8,6 @@ class SceneNode;
 
 struct Command
 {
-	Command();
-
 	std::function<void(SceneNode&, const GameTimer&)>	action;
-	unsigned int								        category;
+	unsigned int								        category = Category::None;
 };

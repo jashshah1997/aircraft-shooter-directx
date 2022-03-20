@@ -9,7 +9,7 @@ World::World(Game* game)
 	, mWorldBounds(0.f, 0.f, 600.f, 2000.f)
 	, mSpawnPosition(0.f, 0.f)
 	, mScrollSpeed(1.f)
-	, mPlayerVelocity(10.f)
+	, mBulletVelocity(10.f)
 {
 
 }
@@ -18,29 +18,13 @@ void World::command(const int playerCommand)
 {
 	switch (playerCommand)
 	{
-	case PlayerCommand::FORWARD:
-		mPlayerAircraft->setVelocity(0, 0, mPlayerVelocity);
-		break;
-
-	case PlayerCommand::BACK:
-		mPlayerAircraft->setVelocity(0, 0, - mPlayerVelocity);
-		break;
-
-	case PlayerCommand::LEFT:
-		mPlayerAircraft->setVelocity(- mPlayerVelocity, 0, 0);
-		break;
-
-	case PlayerCommand::RIGHT:
-		mPlayerAircraft->setVelocity(mPlayerVelocity, 0, 0);
-		break;
-
 	case PlayerCommand::SHOOT:
 		for (auto* bullet : mBulletSpriteVector)
 		{
 			if (!bullet->isActive())
 			{
 				bullet->setActive(true);
-				bullet->setVelocity(0, 0, mPlayerVelocity);
+				bullet->setVelocity(0, 0, mBulletVelocity);
 				break;
 			}
 		}

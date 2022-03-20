@@ -34,7 +34,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneNode.cpp" />
-    <ClCompile Include="Command.cpp" />
     <ClCompile Include="SpriteNode.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>

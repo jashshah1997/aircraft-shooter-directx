@@ -60,9 +60,6 @@
     <ClCompile Include="..\..\Common\DDSTextureLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputCommandQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
