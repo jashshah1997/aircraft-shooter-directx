@@ -39,3 +39,16 @@ void Aircraft::buildCurrent()
 
 	game->getRenderItems().push_back(std::move(render));
 }
+
+unsigned int Aircraft::getCategory() const
+{
+	switch (mType)
+	{
+	case Eagle:
+		return Category::PlayerAircraft; 
+	case Raptor:
+		return Category::EnemyAircraft;
+	default:
+		return Category::None;
+	}
+}

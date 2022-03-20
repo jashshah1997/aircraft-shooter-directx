@@ -20,9 +20,9 @@ public:
 
 
 private:
-	virtual void		drawCurrent() const;
-	virtual void		buildCurrent();
-
+	virtual void		    drawCurrent() const;
+	virtual void		    buildCurrent();
+	virtual unsigned int	getCategory() const override;
 
 private:
 	Type				mType;

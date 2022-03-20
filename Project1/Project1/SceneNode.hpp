@@ -5,6 +5,7 @@
 #include "../../Common/GeometryGenerator.h"
 #include "../../Common/Camera.h"
 #include "FrameResource.h"
+#include "Category.h"
 
 using Microsoft::WRL::ComPtr;
 using namespace DirectX;
@@ -76,6 +77,7 @@ public:
 	XMFLOAT4X4				getTransform() const;
 
 	void					move(float x, float y, float z);
+	virtual unsigned int	getCategory() const;
 private:
 	virtual void			updateCurrent(const GameTimer& gt);
 	void					updateChildren(const GameTimer& gt);
