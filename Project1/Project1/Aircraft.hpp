@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.hpp"
 #include <string>
+#include <iostream>
 
 //! Aircraft class specifies how the aircraft sprites look like.
 //! There are 2 options, an Eagle (player) or a Raptor (enemy) aircraft designs. 
@@ -29,6 +30,7 @@ private:
 	std::string			mSprite;
 };
 
+
 //! A function object (functor) used for handling player commands.
 //! When the functor is invoked, operator() is called, which adds (vx, vy, vz) to the current aircraft velocity.
 struct AircraftMover
@@ -44,15 +46,3 @@ struct AircraftMover
 
 	XMFLOAT3 velocity;
 };
-
-//! Wrap a callable functor object to std::function
-template<typename GameObject, typename Function>
-std::function<void(SceneNode&, const GameTimer&)> derivedAction(Function fn)
-{
-	return[=](SceneNode& node, const GameTimer& gt)
-	{
-		assert(dynamic_cast<GameObject*>(&node) != nullptr);
-
-		fn(static_cast<GameObject&>(node), gt);
-	};
-}

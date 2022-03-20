@@ -9,35 +9,8 @@ World::World(Game* game)
 	, mWorldBounds(0.f, 0.f, 600.f, 2000.f)
 	, mSpawnPosition(0.f, 0.f)
 	, mScrollSpeed(1.f)
-	, mBulletVelocity(10.f)
 {
 
-}
-
-void World::command(const int playerCommand)
-{
-	switch (playerCommand)
-	{
-	case PlayerCommand::SHOOT:
-		for (auto* bullet : mBulletSpriteVector)
-		{
-			if (!bullet->isActive())
-			{
-				bullet->setActive(true);
-				bullet->setVelocity(0, 0, mBulletVelocity);
-				break;
-			}
-		}
-		
-		break;
-
-	case PlayerCommand::NONE:
-		mPlayerAircraft->setVelocity(0, 0, 0);
-		break;
-
-	default:
-		break;
-	}
 }
 
 void World::update(const GameTimer& gt)
@@ -145,7 +118,7 @@ void World::buildScene()
 
 	for (int i = 0; i < 10; i++)
 	{
-		SpriteNode* mBulletSprite = new SpriteNode(mGame, "Bullet", false);
+		Bullet* mBulletSprite = new Bullet(mGame, false);
 		mBulletSprite->setPosition(0, 0.05, -1.0);
 		mBulletSprite->setScale(0.01, 1.0, 0.01);
 		//mBulletSprite->setVelocity(0, 0, -mScrollSpeed);

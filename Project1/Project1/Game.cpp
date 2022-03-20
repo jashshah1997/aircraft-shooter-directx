@@ -155,7 +155,6 @@ void Game::OnMouseDown(WPARAM btnState, int x, int y)
 	//mLastMousePos.y = y;
 
 	SetCapture(mhMainWnd);
-	mWorld.command(PlayerCommand::SHOOT);
 }
 
 void Game::OnMouseUp(WPARAM btnState, int x, int y)
