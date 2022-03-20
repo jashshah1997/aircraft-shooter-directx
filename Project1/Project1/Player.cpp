@@ -113,6 +113,7 @@ bool Player::isRealtimeAction(Action action)
 void Player::assignKey(Action action, char key)
 {
 	mKeyBinding[key] = action;
+	mKeyPressedMap[key] = false;
 }
 
 char Player::getAssignedKey(Action action) const
