@@ -13,5 +13,10 @@ Kill all the enemy aircrafts as fast as possible. <br>
 
 Implemented in C++ using DirectX.
 
+Assignment 2 in the course Game3121 GameEngineDevelopment. <br>
+Add an Object-Oriented input system in the form of a command queue. <br>
+The commands are issued to all entities (SceneNodes) with the appropriate category ID. <br>
+The system is able to handle real-time (continuous) as well as one-time events. <br>
+
 @tableofcontents
 */
