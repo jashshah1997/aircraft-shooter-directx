@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "Player.h"
 
 //!
 //! A Space Shooter game.
@@ -53,6 +54,8 @@ private:
 
 	std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> GetStaticSamplers();
 
+	//! Process Player Input
+	void processInput();
 private:
 
 	std::vector<std::unique_ptr<FrameResource>> mFrameResources;
@@ -97,6 +100,7 @@ private:
 	POINT mLastMousePos;
 	Camera mCamera;
 	World mWorld;
+	Player mPlayer;
 
 public:
 	std::vector<std::unique_ptr<RenderItem>>& getRenderItems() { return mAllRitems; }

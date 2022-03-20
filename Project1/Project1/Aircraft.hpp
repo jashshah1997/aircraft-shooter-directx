@@ -28,3 +28,31 @@ private:
 	Type				mType;
 	std::string			mSprite;
 };
+
+//! A function object (functor) used for handling player commands.
+//! When the functor is invoked, operator() is called, which adds (vx, vy, vz) to the current aircraft velocity.
+struct AircraftMover
+{
+	AircraftMover(float vx, float vy, float vz) : velocity(vx, vy, vz)
+	{
+	}
+	void operator() (SceneNode& node, const GameTimer& gt) const
+	{
+		Aircraft& aircraft = static_cast<Aircraft&>(node);
+		aircraft.setVelocity(velocity);
+	}
+
+	XMFLOAT3 velocity;
+};
+
+//! Wrap a callable functor object to std::function
+template<typename GameObject, typename Function>
+std::function<void(SceneNode&, const GameTimer&)> derivedAction(Function fn)
+{
+	return[=](SceneNode& node, const GameTimer& gt)
+	{
+		assert(dynamic_cast<GameObject*>(&node) != nullptr);
+
+		fn(static_cast<GameObject&>(node), gt);
+	};
+}

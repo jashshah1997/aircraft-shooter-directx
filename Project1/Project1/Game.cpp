@@ -178,6 +178,13 @@ void Game::OnMouseMove(WPARAM btnState, int x, int y)
 	//mLastMousePos.y = y;
 }
 
+void Game::processInput()
+{
+	InputCommandQueue& commands = mWorld.getInputCommandQueue();
+	mPlayer.handleEvent(commands);
+	mPlayer.handleRealtimeInput(commands);
+}
+
 void Game::OnKeyboardInput(const GameTimer& gt)
 {
 	const float dt = gt.DeltaTime();
@@ -188,19 +195,10 @@ void Game::OnKeyboardInput(const GameTimer& gt)
 	XMFLOAT3  oppositef3(-1, -1, -1);
 	XMVECTOR opposite = XMLoadFloat3(&oppositef3);
 
+	processInput();
+
 	bool isKeyPressed = false;
-	if (GetAsyncKeyState('W') & 0x8000)
-	{
-		isKeyPressed = true;
-		bool hit = false;
-
-		if (!hit)
-		{
-			// mCamera.Walk(10.0f * dt);
-			mWorld.command(PlayerCommand::FORWARD);
-		}
-	}
-
+	
 	if (GetAsyncKeyState('S') & 0x8000)
 	{
 		isKeyPressed = true;
