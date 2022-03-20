@@ -1,0 +1,28 @@
+\hypertarget{class_input_command_queue}{}\doxysection{Input\+Command\+Queue Class Reference}
+\label{class_input_command_queue}\index{InputCommandQueue@{InputCommandQueue}}
+
+
+{\ttfamily \#include $<$Input\+Command\+Queue.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_input_command_queue_acf870146d03009ffdd3460acd83f4b57}\label{class_input_command_queue_acf870146d03009ffdd3460acd83f4b57}} 
+void {\bfseries push} (const \mbox{\hyperlink{struct_command}{Command}} \&command)
+\item 
+\mbox{\Hypertarget{class_input_command_queue_a17ed91ae54320ba240cc237436dceac6}\label{class_input_command_queue_a17ed91ae54320ba240cc237436dceac6}} 
+\mbox{\hyperlink{struct_command}{Command}} {\bfseries pop} ()
+\item 
+\mbox{\Hypertarget{class_input_command_queue_a4692768d73e8414c787f0998f647e959}\label{class_input_command_queue_a4692768d73e8414c787f0998f647e959}} 
+bool {\bfseries is\+Empty} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class a way to transport commands to the world and the scene graph. It is a very thin wrapper around a queue of commands. A queue is a FIFO (first in, first out) data structure that ensures that elements, which are inserted first, are also removed first. Only the front element can be accessed. ~\newline
+ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Project1/\+Project1/Input\+Command\+Queue.\+h\item 
+Project1/\+Project1/Input\+Command\+Queue.\+cpp\end{DoxyCompactItemize}

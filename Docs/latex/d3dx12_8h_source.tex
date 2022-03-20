@@ -272,7 +272,7 @@
 \DoxyCodeLine{275         UINT creationNodeMask = 1, }
 \DoxyCodeLine{276         UINT nodeMask = 1 )}
 \DoxyCodeLine{277     \{}
-\DoxyCodeLine{278         Type = D3D12\_HEAP\_TYPE\_CUSTOM;}
+\DoxyCodeLine{278         \mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} = D3D12\_HEAP\_TYPE\_CUSTOM;}
 \DoxyCodeLine{279         CPUPageProperty = cpuPageProperty;}
 \DoxyCodeLine{280         MemoryPoolPreference = memoryPoolPreference;}
 \DoxyCodeLine{281         CreationNodeMask = creationNodeMask;}
@@ -283,7 +283,7 @@
 \DoxyCodeLine{286         UINT creationNodeMask = 1, }
 \DoxyCodeLine{287         UINT nodeMask = 1 )}
 \DoxyCodeLine{288     \{}
-\DoxyCodeLine{289         Type = type;}
+\DoxyCodeLine{289         \mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} = type;}
 \DoxyCodeLine{290         CPUPageProperty = D3D12\_CPU\_PAGE\_PROPERTY\_UNKNOWN;}
 \DoxyCodeLine{291         MemoryPoolPreference = D3D12\_MEMORY\_POOL\_UNKNOWN;}
 \DoxyCodeLine{292         CreationNodeMask = creationNodeMask;}
@@ -292,7 +292,7 @@
 \DoxyCodeLine{295     \textcolor{keyword}{operator} \textcolor{keyword}{const} D3D12\_HEAP\_PROPERTIES\&() \textcolor{keyword}{const} \{ \textcolor{keywordflow}{return} *\textcolor{keyword}{this}; \}}
 \DoxyCodeLine{296     \textcolor{keywordtype}{bool} IsCPUAccessible()\textcolor{keyword}{ const}}
 \DoxyCodeLine{297 \textcolor{keyword}{    }\{}
-\DoxyCodeLine{298         \textcolor{keywordflow}{return} Type == D3D12\_HEAP\_TYPE\_UPLOAD || Type == D3D12\_HEAP\_TYPE\_READBACK || (Type == D3D12\_HEAP\_TYPE\_CUSTOM \&\&}
+\DoxyCodeLine{298         \textcolor{keywordflow}{return} \mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} == D3D12\_HEAP\_TYPE\_UPLOAD || \mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} == D3D12\_HEAP\_TYPE\_READBACK || (\mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} == D3D12\_HEAP\_TYPE\_CUSTOM \&\&}
 \DoxyCodeLine{299             (CPUPageProperty == D3D12\_CPU\_PAGE\_PROPERTY\_WRITE\_COMBINE || CPUPageProperty == D3D12\_CPU\_PAGE\_PROPERTY\_WRITE\_BACK));}
 \DoxyCodeLine{300     \}}
 \DoxyCodeLine{301 \};}
@@ -646,13 +646,13 @@
 \DoxyCodeLine{649     CD3DX12\_TEXTURE\_COPY\_LOCATION(ID3D12Resource* pRes, D3D12\_PLACED\_SUBRESOURCE\_FOOTPRINT \textcolor{keyword}{const}\& Footprint)}
 \DoxyCodeLine{650     \{}
 \DoxyCodeLine{651         pResource = pRes;}
-\DoxyCodeLine{652         Type = D3D12\_TEXTURE\_COPY\_TYPE\_PLACED\_FOOTPRINT;}
+\DoxyCodeLine{652         \mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} = D3D12\_TEXTURE\_COPY\_TYPE\_PLACED\_FOOTPRINT;}
 \DoxyCodeLine{653         PlacedFootprint = Footprint;}
 \DoxyCodeLine{654     \}}
 \DoxyCodeLine{655     CD3DX12\_TEXTURE\_COPY\_LOCATION(ID3D12Resource* pRes, UINT Sub)}
 \DoxyCodeLine{656     \{}
 \DoxyCodeLine{657         pResource = pRes;}
-\DoxyCodeLine{658         Type = D3D12\_TEXTURE\_COPY\_TYPE\_SUBRESOURCE\_INDEX;}
+\DoxyCodeLine{658         \mbox{\hyperlink{namespace_category_a2ff936dbd42aeae91fdfb6f8456a8ab0}{Type}} = D3D12\_TEXTURE\_COPY\_TYPE\_SUBRESOURCE\_INDEX;}
 \DoxyCodeLine{659         SubresourceIndex = Sub;}
 \DoxyCodeLine{660     \}}
 \DoxyCodeLine{661 \}; }

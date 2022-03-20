@@ -6,68 +6,53 @@
 \DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}SceneNode.hpp"{}}}
 \DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Aircraft.hpp"{}}}
 \DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}SpriteNode.h"{}}}
-\DoxyCodeLine{5 }
-\DoxyCodeLine{7 \textcolor{keyword}{class }\mbox{\hyperlink{class_player_command}{PlayerCommand}}}
-\DoxyCodeLine{8 \{}
-\DoxyCodeLine{9 \textcolor{keyword}{public}:}
-\DoxyCodeLine{11     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_player_command_a851be0e4b0ce1b34b4633174df50c5ea}{FORWARD}} = 1;}
-\DoxyCodeLine{12 }
-\DoxyCodeLine{14     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_player_command_a38960eaa10dc466c09261af6cb74ea72}{BACK}} = 2;}
-\DoxyCodeLine{15 }
-\DoxyCodeLine{17     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_player_command_afa8ad3a2d5e890a0f7337b92f4e984e2}{LEFT}} = 3;}
-\DoxyCodeLine{18 }
-\DoxyCodeLine{20     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_player_command_abf48116bcd43f8712b69b72a3493a049}{RIGHT}} = 4;}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}InputCommandQueue.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Bullet.h"{}}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_world}{World}} }
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11 \textcolor{keyword}{public}:}
+\DoxyCodeLine{12     \textcolor{keyword}{explicit}                            \mbox{\hyperlink{class_world}{World}}(\mbox{\hyperlink{class_game}{Game}}* window);}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{15     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_a36c003f54e14e022a360551af5e7923e}{update}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{18     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_ab51a17ccbb108616daacd0c34973dc8d}{draw}}();}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{comment}{//void                              loadTextures();}}
 \DoxyCodeLine{21 }
-\DoxyCodeLine{23     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_player_command_a160ca58b8f0435695216ed1634e9df65}{SHOOT}} = 5;}
+\DoxyCodeLine{23     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_ae7df49f5d488e5cd1254bf360966f410}{buildScene}}();}
 \DoxyCodeLine{24 }
-\DoxyCodeLine{26     \textcolor{keyword}{const} \textcolor{keyword}{static} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_player_command_ac3a549656982ac858387b42bf386ea7d}{NONE}} = 6;}
-\DoxyCodeLine{27 \};}
-\DoxyCodeLine{28 }
-\DoxyCodeLine{30 \textcolor{keyword}{class }\mbox{\hyperlink{class_world}{World}} }
-\DoxyCodeLine{31 \{}
-\DoxyCodeLine{32 \textcolor{keyword}{public}:}
-\DoxyCodeLine{33     \textcolor{keyword}{explicit}                            \mbox{\hyperlink{class_world}{World}}(\mbox{\hyperlink{class_game}{Game}}* window);}
-\DoxyCodeLine{34 }
-\DoxyCodeLine{36     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_a36c003f54e14e022a360551af5e7923e}{update}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
-\DoxyCodeLine{37 }
-\DoxyCodeLine{39     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_ab51a17ccbb108616daacd0c34973dc8d}{draw}}();}
-\DoxyCodeLine{40 }
-\DoxyCodeLine{42     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_aba683872cdc0cca9bca2147483abe660}{command}}(\textcolor{keyword}{const} \textcolor{keywordtype}{int} playerCommand);}
-\DoxyCodeLine{43 }
-\DoxyCodeLine{44     \textcolor{comment}{//void                              loadTextures();}}
-\DoxyCodeLine{45 }
-\DoxyCodeLine{46     \textcolor{comment}{// Build game objects}}
-\DoxyCodeLine{47     \textcolor{keywordtype}{void}                                buildScene();}
-\DoxyCodeLine{48 }
-\DoxyCodeLine{49 }
-\DoxyCodeLine{50 \textcolor{keyword}{private}:}
-\DoxyCodeLine{51     \textcolor{keyword}{enum} Layer}
-\DoxyCodeLine{52     \{}
-\DoxyCodeLine{53         Background,}
-\DoxyCodeLine{54         Air,}
-\DoxyCodeLine{55         LayerCount}
-\DoxyCodeLine{56     \};}
-\DoxyCodeLine{57 }
-\DoxyCodeLine{58 }
-\DoxyCodeLine{59 \textcolor{keyword}{private}:}
-\DoxyCodeLine{60     \mbox{\hyperlink{class_game}{Game}}*                               mGame;}
-\DoxyCodeLine{61 }
-\DoxyCodeLine{62     \mbox{\hyperlink{class_scene_node}{SceneNode}}*                         mSceneGraph;}
-\DoxyCodeLine{63     std::array<SceneNode*, LayerCount>  mSceneLayers;}
-\DoxyCodeLine{64     XMFLOAT4                            mWorldBounds;}
-\DoxyCodeLine{65     XMFLOAT2                            mSpawnPosition;}
-\DoxyCodeLine{66 }
-\DoxyCodeLine{68     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mPlayerAircraft;}
-\DoxyCodeLine{69     \textcolor{keywordtype}{float}                               mPlayerVelocity;}
-\DoxyCodeLine{70 }
-\DoxyCodeLine{72     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy;}
-\DoxyCodeLine{73     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy2;}
-\DoxyCodeLine{74 }
-\DoxyCodeLine{76     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground;}
-\DoxyCodeLine{77     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground2;}
-\DoxyCodeLine{78     \textcolor{keywordtype}{float}                               mScrollSpeed;}
-\DoxyCodeLine{79 }
-\DoxyCodeLine{81     std::vector<SpriteNode*>            mBulletSpriteVector;}
-\DoxyCodeLine{82 \};}
+\DoxyCodeLine{26     \mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}\&                 \mbox{\hyperlink{class_world_a451d938bec826a474201db7975f2e774}{getInputCommandQueue}}();}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 \textcolor{keyword}{private}:}
+\DoxyCodeLine{29     \textcolor{keyword}{enum} Layer}
+\DoxyCodeLine{30     \{}
+\DoxyCodeLine{31         Background,}
+\DoxyCodeLine{32         Air,}
+\DoxyCodeLine{33         LayerCount}
+\DoxyCodeLine{34     \};}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{keyword}{private}:}
+\DoxyCodeLine{38     \mbox{\hyperlink{class_game}{Game}}*                               mGame;}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \mbox{\hyperlink{class_scene_node}{SceneNode}}*                         mSceneGraph;}
+\DoxyCodeLine{41     std::array<SceneNode*, LayerCount>  mSceneLayers;}
+\DoxyCodeLine{42     XMFLOAT4                            mWorldBounds;}
+\DoxyCodeLine{43     XMFLOAT2                            mSpawnPosition;}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{46     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mPlayerAircraft;}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{49     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy;}
+\DoxyCodeLine{50     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy2;}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{53     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground;}
+\DoxyCodeLine{54     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground2;}
+\DoxyCodeLine{55     \textcolor{keywordtype}{float}                               mScrollSpeed;}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{58     std::vector<Bullet*>                mBulletSpriteVector;}
+\DoxyCodeLine{59 }
+\DoxyCodeLine{61     \mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}                  mInputCommandQueue;}
+\DoxyCodeLine{62 \};}
 
 \end{DoxyCode}

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['back_0',['BACK',['../class_player_command.html#a38960eaa10dc466c09261af6cb74ea72',1,'PlayerCommand']]]
+  ['buildscene_0',['buildScene',['../class_world.html#ae7df49f5d488e5cd1254bf360966f410',1,'World']]],
+  ['bullet_1',['Bullet',['../class_bullet.html',1,'']]],
+  ['bulletshooter_2',['BulletShooter',['../struct_bullet_shooter.html',1,'']]]
 ];

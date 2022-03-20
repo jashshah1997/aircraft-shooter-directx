@@ -1,0 +1,29 @@
+\hypertarget{struct_aircraft_mover}{}\doxysection{Aircraft\+Mover Struct Reference}
+\label{struct_aircraft_mover}\index{AircraftMover@{AircraftMover}}
+
+
+{\ttfamily \#include $<$Aircraft.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_aircraft_mover_a8f47c770cff72273988f3d249839a533}\label{struct_aircraft_mover_a8f47c770cff72273988f3d249839a533}} 
+{\bfseries Aircraft\+Mover} (float vx, float vy, float vz)
+\item 
+\mbox{\Hypertarget{struct_aircraft_mover_a9d6d4e315b35642ffb38ed49cb749776}\label{struct_aircraft_mover_a9d6d4e315b35642ffb38ed49cb749776}} 
+void {\bfseries operator()} (\mbox{\hyperlink{class_scene_node}{Scene\+Node}} \&node, const \mbox{\hyperlink{class_game_timer}{Game\+Timer}} \&gt) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_aircraft_mover_a68c3f67aa6ebe014e30315489a075c08}\label{struct_aircraft_mover_a68c3f67aa6ebe014e30315489a075c08}} 
+XMFLOAT3 {\bfseries velocity}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A function object (functor) used for handling player commands. When the functor is invoked, operator() is called, which adds (vx, vy, vz) to the current aircraft velocity. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Project1/\+Project1/Aircraft.\+hpp\end{DoxyCompactItemize}

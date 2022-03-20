@@ -1,0 +1,44 @@
+\hypertarget{class_player}{}\doxysection{Player Class Reference}
+\label{class_player}\index{Player@{Player}}
+
+
+{\ttfamily \#include $<$Player.\+h$>$}
+
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_player_a2da5df212d083bbb1460237f34ab0d88}\label{class_player_a2da5df212d083bbb1460237f34ab0d88}} 
+enum {\bfseries Action} \{ \newline
+{\bfseries Move\+Left}
+, {\bfseries Move\+Right}
+, {\bfseries Move\+Up}
+, {\bfseries Move\+Down}
+, \newline
+{\bfseries Shoot}
+, {\bfseries None}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_player_a1a0a2008ad8a81caec0b473d231f483f}\label{class_player_a1a0a2008ad8a81caec0b473d231f483f}} 
+void {\bfseries handle\+Event} (\mbox{\hyperlink{class_input_command_queue}{Input\+Command\+Queue}} \&commands)
+\item 
+\mbox{\Hypertarget{class_player_aab9d82be79245fbfeaa899c73c7c1b76}\label{class_player_aab9d82be79245fbfeaa899c73c7c1b76}} 
+void {\bfseries handle\+Realtime\+Input} (\mbox{\hyperlink{class_input_command_queue}{Input\+Command\+Queue}} \&commands)
+\item 
+\mbox{\Hypertarget{class_player_a1aebc48270700e3052aaf2653be62bc6}\label{class_player_a1aebc48270700e3052aaf2653be62bc6}} 
+void {\bfseries assign\+Key} (Action action, char key)
+\item 
+\mbox{\Hypertarget{class_player_a6ffaa42ae4d105bd8a775f18ce37c463}\label{class_player_a6ffaa42ae4d105bd8a775f18ce37c463}} 
+char {\bfseries get\+Assigned\+Key} (Action action) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The \mbox{\hyperlink{class_player}{Player}} class contains two methods to react to the events and real-\/time input. It also allows the player to set the input keys to their liking. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Project1/\+Project1/Player.\+h\item 
+Project1/\+Project1/Player.\+cpp\end{DoxyCompactItemize}

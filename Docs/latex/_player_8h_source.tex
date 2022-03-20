@@ -1,0 +1,56 @@
+\hypertarget{_player_8h_source}{}\doxysection{Player.\+h}
+\label{_player_8h_source}\index{Project1/Project1/Player.h@{Project1/Project1/Player.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}InputCommandQueue.h"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_player}{Player}}}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_player}{Player}}();}
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} handleEvent(\mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}\& commands);}
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} handleRealtimeInput(\mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}\& commands);}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     \textcolor{keyword}{enum} Action}
+\DoxyCodeLine{18     \{}
+\DoxyCodeLine{19         MoveLeft,}
+\DoxyCodeLine{20         MoveRight,}
+\DoxyCodeLine{21         MoveUp,}
+\DoxyCodeLine{22         MoveDown,}
+\DoxyCodeLine{23         Shoot,}
+\DoxyCodeLine{24         None}
+\DoxyCodeLine{25     \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keywordtype}{void} assignKey(Action action, \textcolor{keywordtype}{char} key);}
+\DoxyCodeLine{28     \textcolor{keywordtype}{char} getAssignedKey(Action action) \textcolor{keyword}{const};}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{keyword}{private}:}
+\DoxyCodeLine{31     \textcolor{keyword}{static} \textcolor{keywordtype}{bool} isRealtimeAction(Action action); }
+\DoxyCodeLine{32     \textcolor{keywordtype}{void}        initializeKeyBindings();}
+\DoxyCodeLine{33     \textcolor{keywordtype}{void}        initializeActionBindings();}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35 \textcolor{keyword}{private}:}
+\DoxyCodeLine{36     std::map<char, Action>      mKeyBinding; }
+\DoxyCodeLine{37     std::map<Action, Command>   mActionBinding;}
+\DoxyCodeLine{38     std::map<char, bool>        mKeyPressedMap;}
+\DoxyCodeLine{39     \textcolor{keywordtype}{float}                       mPlayerSpeed = 10;}
+\DoxyCodeLine{40     \textcolor{keywordtype}{float}                       mBulletVelocity = 15;}
+\DoxyCodeLine{41 \};}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{44 \textcolor{keyword}{template}<\textcolor{keyword}{typename} GameObject, \textcolor{keyword}{typename} Function>}
+\DoxyCodeLine{45 std::function<void(\mbox{\hyperlink{class_scene_node}{SceneNode}}\&, \textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\&)> derivedAction(Function fn)}
+\DoxyCodeLine{46 \{}
+\DoxyCodeLine{47     \textcolor{keywordflow}{return}[=](\mbox{\hyperlink{class_scene_node}{SceneNode}}\& node, \textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt)}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49         assert(\textcolor{keyword}{dynamic\_cast<}GameObject*\textcolor{keyword}{>}(\&node) != \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51         fn(\textcolor{keyword}{static\_cast<}GameObject\&\textcolor{keyword}{>}(node), gt);}
+\DoxyCodeLine{52     \};}
+\DoxyCodeLine{53 \}}
+
+\end{DoxyCode}

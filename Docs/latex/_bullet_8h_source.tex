@@ -1,0 +1,55 @@
+\hypertarget{_bullet_8h_source}{}\doxysection{Bullet.\+h}
+\label{_bullet_8h_source}\index{Project1/Project1/Bullet.h@{Project1/Project1/Bullet.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}Entity.hpp"{}}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{5 \textcolor{keyword}{class }\mbox{\hyperlink{class_bullet}{Bullet}} :}
+\DoxyCodeLine{6     \textcolor{keyword}{public} \mbox{\hyperlink{class_entity}{Entity}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8 \textcolor{keyword}{public}:}
+\DoxyCodeLine{9     \mbox{\hyperlink{class_bullet}{Bullet}}(\mbox{\hyperlink{class_game}{Game}}* game, \textcolor{keywordtype}{bool} scale = \textcolor{keyword}{false});}
+\DoxyCodeLine{10     \textcolor{keywordtype}{void} setActive(\textcolor{keywordtype}{bool} active);}
+\DoxyCodeLine{11     \textcolor{keywordtype}{bool} isActive();}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{keyword}{static} \textcolor{keywordtype}{bool} IsBulletShot;}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{15 \textcolor{keyword}{private}:}
+\DoxyCodeLine{16     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}            drawCurrent() \textcolor{keyword}{const};}
+\DoxyCodeLine{17     \textcolor{keyword}{virtual} \textcolor{keywordtype}{void}            buildCurrent();}
+\DoxyCodeLine{18     \textcolor{keyword}{virtual} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}    getCategory() \textcolor{keyword}{const override};}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{21     \textcolor{keywordtype}{bool}                mScale;}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{24     \textcolor{keywordtype}{bool}                mActive;}
+\DoxyCodeLine{25 \};}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_bullet_shooter}{BulletShooter}}}
+\DoxyCodeLine{28 \{}
+\DoxyCodeLine{29     \mbox{\hyperlink{struct_bullet_shooter}{BulletShooter}}(\textcolor{keywordtype}{float} vx, \textcolor{keywordtype}{float} vy, \textcolor{keywordtype}{float} vz) : bullet\_velocity(vx, vy, vz)}
+\DoxyCodeLine{30     \{}
+\DoxyCodeLine{31     \}}
+\DoxyCodeLine{32     \textcolor{keywordtype}{void} operator() (\mbox{\hyperlink{class_scene_node}{SceneNode}}\& node, \textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt)\textcolor{keyword}{ const}}
+\DoxyCodeLine{33 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{34         \textcolor{comment}{// A bullet is already shot this iteration}}
+\DoxyCodeLine{35         \textcolor{keywordflow}{if} (Bullet::IsBulletShot) \{}
+\DoxyCodeLine{36             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{37         \}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39         \mbox{\hyperlink{class_bullet}{Bullet}}\& bullet = \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{class_bullet}{Bullet}}\&\textcolor{keyword}{>}(node);}
+\DoxyCodeLine{40         }
+\DoxyCodeLine{41         \textcolor{comment}{// Check if bullet is already active and shot}}
+\DoxyCodeLine{42         \textcolor{keywordflow}{if} (bullet.isActive()) \{}
+\DoxyCodeLine{43             \textcolor{keywordflow}{return};}
+\DoxyCodeLine{44         \}}
+\DoxyCodeLine{45 }
+\DoxyCodeLine{46         bullet.setActive(\textcolor{keyword}{true});}
+\DoxyCodeLine{47         bullet.setVelocity(bullet\_velocity);}
+\DoxyCodeLine{48         Bullet::IsBulletShot = \textcolor{keyword}{true};}
+\DoxyCodeLine{49     \}}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51     XMFLOAT3 bullet\_velocity;}
+\DoxyCodeLine{52 \};}
+
+\end{DoxyCode}
