@@ -134,6 +134,18 @@ void World::buildScene()
 	// mPlayerAircraft->setVelocity(0.0, 0, mScrollSpeed);
 	mSceneGraph->attachChild(std::move(player));
 
+	std::unique_ptr<Aircraft> player1(new Aircraft(Aircraft::Eagle, mGame));
+	mPlayerAircraft1 = (Aircraft*)player1.get();
+	mPlayerAircraft1->setPosition(2, 0.5, -1.5);
+	mPlayerAircraft1->setScale(0.07, 0.2, 0.07);
+	mSceneGraph->attachChild(std::move(player1));
+
+	std::unique_ptr<Aircraft> player2(new Aircraft(Aircraft::Eagle, mGame));
+	mPlayerAircraft2 = (Aircraft*)player2.get();
+	mPlayerAircraft2->setPosition(-2, 0.5, -1.5);
+	mPlayerAircraft2->setScale(0.07, 0.2, 0.07);
+	mSceneGraph->attachChild(std::move(player2));
+
 	mSceneGraph->build();
 }
 

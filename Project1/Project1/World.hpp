@@ -44,6 +44,8 @@ private:
 
 	//! Player aircraft
 	Aircraft*							mPlayerAircraft;
+	Aircraft*							mPlayerAircraft1;
+	Aircraft*							mPlayerAircraft2;
 
 	//! Active enemies
 	Aircraft*						    mEnemy;
