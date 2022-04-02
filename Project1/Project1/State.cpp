@@ -1,10 +1,10 @@
 #include "State.h"
 #include "StateStack.h"
 
-
-State::Context::Context(World& context_world, Player& context_player)
+State::Context::Context(World& context_world, Player& context_player, Game& context_game)
 	: world(&context_world)
 	, player(&context_player)
+	, game(&context_game)
 {
 }
 

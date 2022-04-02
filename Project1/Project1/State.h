@@ -9,6 +9,7 @@ class StateStack;
 class Player;
 class GameTimer;
 class World;
+class Game;
 
 class State
 {
@@ -18,10 +19,11 @@ public:
 	struct Context
 	{
 		
-		Context(World& world, Player& player);
+		Context(World& world, Player& player, Game& game);
 
 		World* world;
 		Player* player;
+		Game* game;
 	};
 
 
@@ -31,7 +33,7 @@ public:
 
 	virtual void		draw() = 0;
 	virtual bool		update(const GameTimer& gt) = 0;
-	virtual bool		handleEvent() = 0;
+	virtual bool		handleEvent(bool isKeyPressed = false) = 0;
 
 
 protected:

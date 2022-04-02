@@ -3,6 +3,7 @@
 
 World::World(Game* game)
 	: mSceneGraph(new SceneNode(game))
+	, mTitleGraph(new SceneNode(game))
 	, mGame(game)
 	, mPlayerAircraft(nullptr)
 	, mBackground(nullptr)
@@ -68,12 +69,8 @@ void World::update(const GameTimer& gt)
 		mEnemy2->setPosition(distr(gen), 0.5, distr(gen));
 		mEnemy2->setVelocity(0, 0, 0);
 	}
-}
 
-void World::draw()
-{
-	mSceneGraph->draw();
-	
+
 	auto backgroundPos = mBackground->getWorldPosition();
 	auto backgroundPos2 = mBackground2->getWorldPosition();
 
@@ -81,9 +78,34 @@ void World::draw()
 	if (backgroundPos2.z < -10) mBackground2->setPosition(0, 0, backgroundPos.z + 10);
 }
 
+void World::draw(States::ID id)
+{
+	switch (id)
+	{
+	case States::ID::None:
+		break;
+	case States::ID::Title:
+		mTitleSprite->setPosition(10, 1, 6);
+		break;
+	case States::ID::Menu:
+		break;
+	case States::ID::Game:
+		mTitleSprite->setPosition(0, -1, 0);
+		break;
+	case States::ID::Loading:
+		break;
+	case States::ID::Pause:
+		break;
+	default:
+		break;
+	}
+	
+	mTitleGraph->draw();
+	mSceneGraph->draw();
+}
+
 void World::buildScene()
 {
-
 	std::unique_ptr<Aircraft> enemy(new Aircraft(Aircraft::Raptor, mGame));
 	mEnemy = (Aircraft*)enemy.get();
 	mEnemy->setPosition(2, 0.5, 0);
@@ -147,6 +169,14 @@ void World::buildScene()
 	mSceneGraph->attachChild(std::move(player2));
 
 	mSceneGraph->build();
+
+	std::unique_ptr<SpriteNode> titleSprite(new SpriteNode(mGame, "TitleScreen", true));
+	mTitleSprite = (SpriteNode*)titleSprite.get();
+	mTitleSprite->setPosition(100, 0.5, 100);
+	mTitleSprite->setScale(9.0, 1.0, 6);
+	mTitleGraph->attachChild(std::move(titleSprite));
+
+	mTitleGraph->build();
 }
 
 //! Get the input command queue

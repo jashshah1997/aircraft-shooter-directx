@@ -1,18 +1,19 @@
 #include "GameState.h"
 #include "../../Common/GameTimer.h"
 #include "InputCommandQueue.h"
+#include "Game.hpp"
 
 GameState::GameState(StateStack& stack, Context context)
 	: State(stack, context)
 	, mWorld(context.world)
 	, mPlayer(context.player)
+	, mGame(context.game)
 {
-
 }
 
 void GameState::draw()
 {
-	mWorld->draw();
+	mWorld->draw(States::ID::Game);
 }
 
 bool GameState::update(const GameTimer& gt)
@@ -25,7 +26,7 @@ bool GameState::update(const GameTimer& gt)
 	return true;
 }
 
-bool GameState::handleEvent()
+bool GameState::handleEvent(bool isKeyPressed)
 {
 	// Game input handling
 	InputCommandQueue& commands = mWorld->getInputCommandQueue();

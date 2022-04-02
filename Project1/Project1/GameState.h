@@ -4,6 +4,7 @@
 #include "World.hpp"
 #include "Player.h"
 
+class Game;
 class GameTimer;
 
 class GameState : public State
@@ -13,10 +14,11 @@ public:
 
 	virtual void		draw();
 	virtual bool		update(const GameTimer& gt);
-	virtual bool		handleEvent();
+	virtual bool		handleEvent(bool isKeyPressed = false);
 
 
 private:
 	World*				mWorld;
 	Player*				mPlayer;
+	Game*				mGame;
 };

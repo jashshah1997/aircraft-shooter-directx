@@ -4,6 +4,7 @@
 #include "SpriteNode.h"
 #include "InputCommandQueue.h"
 #include "Bullet.h"
+#include "StateIdentifiers.h"
 
 //! World class connects, updates and draw all the game components.
 class World 
@@ -15,7 +16,7 @@ public:
 	void								update(const GameTimer& gt);
 
 	//! Draw sprites
-	void								draw();
+	void								draw(States::ID id);
 
 	//void								loadTextures();
 
@@ -38,6 +39,9 @@ private:
 	Game*								mGame;
 
 	SceneNode*							mSceneGraph;
+	SceneNode*							mTitleGraph;
+	SpriteNode*							mTitleSprite;
+
 	std::array<SceneNode*, LayerCount>	mSceneLayers;
 	XMFLOAT4							mWorldBounds;
 	XMFLOAT2		    				mSpawnPosition;

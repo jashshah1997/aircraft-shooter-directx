@@ -31,7 +31,7 @@ public:
 
 	void				update(const GameTimer& gt);
 	void				draw();
-	void				handleEvent();
+	void				handleEvent(bool isKeyPressed = false);
 
 	void				pushState(States::ID stateID);
 	void				popState();

@@ -39,6 +39,7 @@
     <ClCompile Include="SpriteNode.cpp" />
     <ClCompile Include="StackState.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="TitleState.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +68,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.h" />
     <ClInclude Include="StateStack.h" />
+    <ClInclude Include="TitleState.h" />
     <ClInclude Include="World.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "GameState.h"
+#include "TitleState.h"
 #include "StateIdentifiers.h"
 
 const int gNumFrameResources = 3;
@@ -7,10 +8,11 @@ const int gNumFrameResources = 3;
 Game::Game(HINSTANCE hInstance)
 	: D3DApp(hInstance)
 	, mWorld(this)
-	, mStateStack(State::Context(mWorld, mPlayer))
+	, mStateStack(State::Context(mWorld, mPlayer, *this))
 {
 	mStateStack.registerState<GameState>(States::ID::Game);
-	mStateStack.pushState(States::ID::Game);
+	mStateStack.registerState<TitleState>(States::ID::Title);
+	mStateStack.pushState(States::ID::Title);
 }
 
 Game::~Game()
@@ -186,6 +188,11 @@ void Game::OnKeyboardInput(const GameTimer& gt)
 {
 	mStateStack.handleEvent();
 	mCamera.UpdateViewMatrix();
+}
+
+void Game::OnAnyKeyDown()
+{
+	mStateStack.handleEvent(true);
 }
 
 void Game::UpdateCamera(const GameTimer& gt)
