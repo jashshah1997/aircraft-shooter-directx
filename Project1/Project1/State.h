@@ -8,7 +8,7 @@
 class StateStack;
 class Player;
 class GameTimer;
-class InputCommandQueue;
+class World;
 
 class State
 {
@@ -18,12 +18,10 @@ public:
 	struct Context
 	{
 		
-		//Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player);
+		Context(World& world, Player& player);
 
-		//sf::RenderWindow* window;
-		//TextureHolder* textures;
-		//FontHolder* fonts;
-		//Player* player;
+		World* world;
+		Player* player;
 	};
 
 
@@ -33,7 +31,7 @@ public:
 
 	virtual void		draw() = 0;
 	virtual bool		update(const GameTimer& gt) = 0;
-	virtual bool		handleEvent(InputCommandQueue& commands) = 0;
+	virtual bool		handleEvent() = 0;
 
 
 protected:

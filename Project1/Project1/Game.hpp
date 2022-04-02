@@ -1,5 +1,6 @@
 #include "World.hpp"
 #include "Player.h"
+#include "StateStack.h"
 
 //!
 //! A Space Shooter game.
@@ -53,9 +54,6 @@ private:
 	void DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems);
 
 	std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> GetStaticSamplers();
-
-	//! Process Player Input
-	void processInput();
 private:
 
 	std::vector<std::unique_ptr<FrameResource>> mFrameResources;
@@ -101,6 +99,7 @@ private:
 	Camera mCamera;
 	World mWorld;
 	Player mPlayer;
+	StateStack mStateStack;
 
 public:
 	std::vector<std::unique_ptr<RenderItem>>& getRenderItems() { return mAllRitems; }

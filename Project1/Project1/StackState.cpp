@@ -31,12 +31,12 @@ void StateStack::draw()
 		state->draw();
 }
 
-void StateStack::handleEvent(InputCommandQueue& commands)
+void StateStack::handleEvent()
 {
 	// Iterate from top to bottom, stop as soon as handleEvent() returns false
 	for (auto itr = mStack.rbegin(); itr != mStack.rend(); ++itr)
 	{
-		if (!(*itr)->handleEvent(commands))
+		if (!(*itr)->handleEvent())
 			break;
 	}
 

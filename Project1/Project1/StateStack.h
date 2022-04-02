@@ -31,7 +31,7 @@ public:
 
 	void				update(const GameTimer& gt);
 	void				draw();
-	void				handleEvent(InputCommandQueue& commands);
+	void				handleEvent();
 
 	void				pushState(States::ID stateID);
 	void				popState();

@@ -1,11 +1,16 @@
 #include "Game.hpp"
+#include "GameState.h"
+#include "StateIdentifiers.h"
 
 const int gNumFrameResources = 3;
 
 Game::Game(HINSTANCE hInstance)
 	: D3DApp(hInstance)
 	, mWorld(this)
+	, mStateStack(State::Context(mWorld, mPlayer))
 {
+	mStateStack.registerState<GameState>(States::ID::Game);
+	mStateStack.pushState(States::ID::Game);
 }
 
 Game::~Game()
@@ -65,7 +70,7 @@ void Game::OnResize()
 void Game::Update(const GameTimer& gt)
 {
 	OnKeyboardInput(gt);
-	mWorld.update(gt);
+	mStateStack.update(gt);
 	UpdateCamera(gt);
 
 	// Cycle through the circular frame resource array.
@@ -122,7 +127,7 @@ void Game::Draw(const GameTimer& gt)
 	auto passCB = mCurrFrameResource->PassCB->Resource();
 	mCommandList->SetGraphicsRootConstantBufferView(2, passCB->GetGPUVirtualAddress());
 
-	mWorld.draw();
+	mStateStack.draw();
 	DrawRenderItems(mCommandList.Get(), mOpaqueRitems);
 
 	// Indicate a state transition on the resource usage.
@@ -177,16 +182,9 @@ void Game::OnMouseMove(WPARAM btnState, int x, int y)
 	//mLastMousePos.y = y;
 }
 
-void Game::processInput()
-{
-	InputCommandQueue& commands = mWorld.getInputCommandQueue();
-	mPlayer.handleEvent(commands);
-	mPlayer.handleRealtimeInput(commands);
-}
-
 void Game::OnKeyboardInput(const GameTimer& gt)
 {
-	processInput();
+	mStateStack.handleEvent();
 	mCamera.UpdateViewMatrix();
 }
 

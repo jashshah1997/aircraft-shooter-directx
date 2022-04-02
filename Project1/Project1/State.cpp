@@ -2,13 +2,11 @@
 #include "StateStack.h"
 
 
-//State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Player& player)
-//	: window(&window)
-//	, textures(&textures)
-//	, fonts(&fonts)
-//	, player(&player)
-//{
-//}
+State::Context::Context(World& context_world, Player& context_player)
+	: world(&context_world)
+	, player(&context_player)
+{
+}
 
 State::State(StateStack& stack, Context context)
 	: mStack(&stack)
