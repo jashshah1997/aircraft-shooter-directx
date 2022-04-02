@@ -59,6 +59,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneNode.hpp" />
     <ClInclude Include="SpriteNode.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="World.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
