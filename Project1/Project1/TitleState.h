@@ -2,6 +2,7 @@
 
 #include "State.h"
 
+class Game;
 class GameTimer;
 
 class TitleState : public State
@@ -16,6 +17,7 @@ public:
 
 private:
 	World* mWorld;
+	Game* mGame;
 	//sf::Sprite			mBackgroundSprite;
 	//sf::Text			mText;
 

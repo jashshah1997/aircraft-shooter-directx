@@ -56,6 +56,14 @@ bool Game::Initialize()
 	// Wait until initialization is complete.
 	FlushCommandQueue();
 
+	// set the text vertex buffer view for each frame
+	for (int i = 0; i < mFrameBufferCount; ++i)
+	{
+		mTextVertexBufferView[i].BufferLocation = mTextVertexBuffer[i]->GetGPUVirtualAddress();
+		mTextVertexBufferView[i].StrideInBytes = sizeof(TextVertex);
+		mTextVertexBufferView[i].SizeInBytes = maxNumTextCharacters * sizeof(TextVertex);
+	}
+
 	return true;
 }
 
@@ -130,8 +138,8 @@ void Game::Draw(const GameTimer& gt)
 	auto passCB = mCurrFrameResource->PassCB->Resource();
 	mCommandList->SetGraphicsRootConstantBufferView(2, passCB->GetGPUVirtualAddress());
 
-	mStateStack.draw();
 	DrawRenderItems(mCommandList.Get(), mOpaqueRitems);
+	mStateStack.draw();
 
 	// Indicate a state transition on the resource usage.
 	mCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
@@ -681,11 +689,31 @@ void Game::BuildFonts()
 	fontsrvDesc.Texture2D.MipLevels = 1;
 
 	// we need to get the next descriptor location in the descriptor heap to store this srv
-	auto srvHandleSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	mArialFont.srvHandle = CD3DX12_GPU_DESCRIPTOR_HANDLE(mSrvDescriptorHeap->GetGPUDescriptorHandleForHeapStart(), 5, srvHandleSize);
+	mSrvHandlSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	mArialFont.srvHandle = CD3DX12_GPU_DESCRIPTOR_HANDLE(mSrvDescriptorHeap->GetGPUDescriptorHandleForHeapStart(), 5, mSrvHandlSize);
 	
-	CD3DX12_CPU_DESCRIPTOR_HANDLE srvHandle(mSrvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), 5, srvHandleSize);
+	CD3DX12_CPU_DESCRIPTOR_HANDLE srvHandle(mSrvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), 5, mSrvHandlSize);
 	md3dDevice->CreateShaderResourceView(mArialFont.textureBuffer, &fontsrvDesc, srvHandle);
+
+	for (int i = 0; i < mFrameBufferCount; ++i)
+	{
+		// create upload heap. We will fill this with data for our text
+		ID3D12Resource* vBufferUploadHeap;
+		ThrowIfFailed(md3dDevice->CreateCommittedResource(
+			&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD), // upload heap
+			D3D12_HEAP_FLAG_NONE, // no flags
+			&CD3DX12_RESOURCE_DESC::Buffer(maxNumTextCharacters * sizeof(TextVertex)), // resource description for a buffer
+			D3D12_RESOURCE_STATE_GENERIC_READ, // GPU will read from this buffer and copy its contents to the default heap
+			nullptr,
+			IID_PPV_ARGS(&mTextVertexBuffer[i])));
+		
+		mTextVertexBuffer[i]->SetName(L"Text Vertex Buffer Upload Resource Heap");
+
+		CD3DX12_RANGE readRange(0, 0);	// We do not intend to read from this resource on the CPU. (so end is less than or equal to begin)
+
+		// map the resource heap to get a gpu virtual address to the beginning of the heap
+		ThrowIfFailed(mTextVertexBuffer[i]->Map(0, &readRange, reinterpret_cast<void**>(&mTextVBGPUAddress[i])));
+	}
 }
 
 void Game::BuildFrameResources()
@@ -1015,4 +1043,92 @@ Font Game::LoadFont(LPCWSTR filename, int windowWidth, int windowHeight)
 	}
 
 	return font;
+}
+
+void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale, XMFLOAT2 padding, XMFLOAT4 color)
+{
+	// clear the depth buffer so we can draw over everything
+	mCommandList->ClearDepthStencilView(DepthStencilView(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+	// set the text pipeline state object
+	mCommandList->SetPipelineState(mTextPSO.Get());
+
+	// this way we only need 4 vertices per quad rather than 6 if we were to use a triangle list topology
+	mCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	// set the text vertex buffer
+	mCommandList->IASetVertexBuffers(0, 1, &mTextVertexBufferView[0]);
+
+	// bind the text srv. We will assume the correct descriptor heap and table are currently bound and set
+	mCommandList->SetGraphicsRootDescriptorTable(0, font.srvHandle);
+
+	int numCharacters = 0;
+
+	float topLeftScreenX = (pos.x * 2.0f) - 1.0f;
+	float topLeftScreenY = ((1.0f - pos.y) * 2.0f) - 1.0f;
+
+	float x = topLeftScreenX;
+	float y = topLeftScreenY;
+
+	float horrizontalPadding = (font.leftpadding + font.rightpadding) * padding.x;
+	float verticalPadding = (font.toppadding + font.bottompadding) * padding.y;
+
+	// cast the gpu virtual address to a textvertex, so we can directly store our vertices there
+	TextVertex* vert = (TextVertex*)mTextVBGPUAddress[0];
+
+	wchar_t lastChar = -1; // no last character to start with
+
+	for (int i = 0; i < text.size(); ++i)
+	{
+		wchar_t c = text[i];
+
+		FontChar* fc = font.GetChar(c);
+
+		// character not in font char set
+		if (fc == nullptr)
+			continue;
+
+		// end of string
+		if (c == L'\0')
+			break;
+
+		// new line
+		if (c == L'\n')
+		{
+			x = topLeftScreenX;
+			y -= (font.lineHeight + verticalPadding) * scale.y;
+			continue;
+		}
+
+		// don't overflow the buffer. In your app if this is true, you can implement a resize of your text vertex buffer
+		if (numCharacters >= maxNumTextCharacters)
+			break;
+
+		float kerning = 0.0f;
+		if (i > 0)
+			kerning = font.GetKerning(lastChar, c);
+
+		vert[numCharacters] = TextVertex(color.x,
+			color.y,
+			color.z,
+			color.w,
+			fc->u,
+			fc->v,
+			fc->twidth,
+			fc->theight,
+			x + ((fc->xoffset + kerning) * scale.x),
+			y - (fc->yoffset * scale.y),
+			fc->width * scale.x,
+			fc->height * scale.y);
+
+		numCharacters++;
+
+		// remove horrizontal padding and advance to next char position
+		x += (fc->xadvance - horrizontalPadding) * scale.x;
+
+		lastChar = c;
+	}
+
+	// we are going to have 4 vertices per character (trianglestrip to make quad), and each instance is one character
+	mCommandList->DrawInstanced(4, numCharacters, 0, 0);
 }

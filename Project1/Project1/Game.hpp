@@ -22,6 +22,9 @@ public:
 	~Game();
 
 	virtual bool Initialize()override;
+	void RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale = XMFLOAT2(1.0f, 1.0f), XMFLOAT2 padding = XMFLOAT2(0.5f, 0.0f), XMFLOAT4 color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+	Font mArialFont; // this will store our arial font information
+
 private:
 	virtual void OnResize()override;
 	virtual void Update(const GameTimer& gt)override;
@@ -108,18 +111,17 @@ private:
 	// pso containing a pipeline state
 	ComPtr<ID3D12PipelineState> mTextPSO; 
 
-	Font mArialFont; // this will store our arial font information
 
 	int maxNumTextCharacters = 1024; // the maximum number of characters you can render during a frame. This is just used to make sure
 									// there is enough memory allocated for the text vertex buffer each frame
 
-	static const int mFrameBufferCount = 3; // number of buffers we want, 2 for double buffering, 3 for tripple buffering
-	ID3D12Resource* textVertexBuffer[mFrameBufferCount];
-	D3D12_VERTEX_BUFFER_VIEW textVertexBufferView[mFrameBufferCount]; // a view for our text vertex buffer
-	UINT8* textVBGPUAddress[mFrameBufferCount]; // this is a pointer to each of the text constant buffers
+	static const int mFrameBufferCount = 1; // number of buffers we want, 2 for double buffering, 3 for tripple buffering
+	ID3D12Resource* mTextVertexBuffer[mFrameBufferCount];
+	D3D12_VERTEX_BUFFER_VIEW mTextVertexBufferView[mFrameBufferCount]; // a view for our text vertex buffer
+	UINT8* mTextVBGPUAddress[mFrameBufferCount]; // this is a pointer to each of the text constant buffers
+	UINT8 mSrvHandlSize;
 
 	Font LoadFont(LPCWSTR filename, int windowWidth, int windowHeight); // load a font
-	void RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale = XMFLOAT2(1.0f, 1.0f), XMFLOAT2 padding = XMFLOAT2(0.5f, 0.0f), XMFLOAT4 color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 
 
 
