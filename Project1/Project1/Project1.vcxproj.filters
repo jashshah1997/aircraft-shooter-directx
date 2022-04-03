@@ -164,5 +164,8 @@
     <ClInclude Include="TitleState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

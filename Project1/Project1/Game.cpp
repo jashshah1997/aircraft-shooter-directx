@@ -46,6 +46,7 @@ bool Game::Initialize()
 	BuildRenderItems();
 	BuildFrameResources();
 	BuildPSOs();
+	BuildFonts();
 
 	// Execute the initialization commands.
 	ThrowIfFailed(mCommandList->Close());
@@ -309,7 +310,7 @@ void Game::LoadTextures()
 	ThrowIfFailed(DirectX::CreateDDSTextureFromFile12(md3dDevice.Get(),
 		mCommandList.Get(), RaptorTex->Filename.c_str(),
 		RaptorTex->Resource, RaptorTex->UploadHeap));
-
+	
 	mTextures[RaptorTex->Name] = std::move(RaptorTex);
 
 	//Desert
@@ -393,7 +394,7 @@ void Game::BuildDescriptorHeaps()
 	// Create the SRV heap.
 	//
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	srvHeapDesc.NumDescriptors = 5;
+	srvHeapDesc.NumDescriptors = 6;
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	ThrowIfFailed(md3dDevice->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&mSrvDescriptorHeap)));
@@ -459,6 +460,9 @@ void Game::BuildShadersAndInputLayout()
 	mShaders["standardVS"] = d3dUtil::CompileShader(L"Shaders\\Default.hlsl", nullptr, "VS", "vs_5_1");
 	mShaders["opaquePS"] = d3dUtil::CompileShader(L"Shaders\\Default.hlsl", nullptr, "PS", "ps_5_1");
 
+	mShaders["textVS"] = d3dUtil::CompileShader(L"Shaders\\TextVertexShader.hlsl", nullptr, "main", "vs_5_0");
+	mShaders["textPS"] = d3dUtil::CompileShader(L"Shaders\\TextPixelShader.hlsl", nullptr, "main", "ps_5_0");
+
 	mInputLayout =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
@@ -466,6 +470,16 @@ void Game::BuildShadersAndInputLayout()
 		//step3
 		//The texture coordinates determine what part of the texture gets mapped on the triangles.
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+	};
+
+	// create input layout
+	// The input layout is used by the Input Assembler so that it knows
+	// how to read the vertex data bound to it.
+	mTextInputLayout =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA, 1 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA, 1 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 32, D3D12_INPUT_CLASSIFICATION_PER_INSTANCE_DATA, 1 }
 	};
 }
 
@@ -550,6 +564,128 @@ void Game::BuildPSOs()
 	opaquePsoDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
 	opaquePsoDesc.DSVFormat = mDepthStencilFormat;
 	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&opaquePsoDesc, IID_PPV_ARGS(&mOpaquePSO)));
+
+	// create the text pipeline state object (PSO)
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC textpsoDesc = {};
+	textpsoDesc.InputLayout = { mTextInputLayout.data(), (UINT)mTextInputLayout.size() };
+	textpsoDesc.pRootSignature = mRootSignature.Get();
+	textpsoDesc.VS = 
+	{
+		reinterpret_cast<BYTE*>(mShaders["textVS"]->GetBufferPointer()),
+		mShaders["textVS"]->GetBufferSize()
+	};
+	textpsoDesc.PS = 
+	{
+		reinterpret_cast<BYTE*>(mShaders["textPS"]->GetBufferPointer()),
+		mShaders["textPS"]->GetBufferSize()
+	};
+	textpsoDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	textpsoDesc.RTVFormats[0] = mBackBufferFormat;
+	textpsoDesc.SampleDesc.Count = 1;
+	textpsoDesc.SampleDesc.Quality = 0;
+	textpsoDesc.SampleMask = 0xffffffff;
+	textpsoDesc.RasterizerState = CD3DX12_RASTERIZER_DESC(D3D12_DEFAULT);
+
+	// Create blend state
+
+	D3D12_BLEND_DESC textBlendStateDesc = {};
+	textBlendStateDesc.AlphaToCoverageEnable = FALSE;
+	textBlendStateDesc.IndependentBlendEnable = FALSE;
+	textBlendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+
+	textBlendStateDesc.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	textBlendStateDesc.RenderTarget[0].DestBlend = D3D12_BLEND_ONE;
+	textBlendStateDesc.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+
+	textBlendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+	textBlendStateDesc.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ONE;
+	textBlendStateDesc.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+
+	textBlendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	
+	// Set blend state
+	textpsoDesc.BlendState = textBlendStateDesc;
+	textpsoDesc.NumRenderTargets = 1;
+
+	// Set depth
+	D3D12_DEPTH_STENCIL_DESC textDepthStencilDesc = CD3DX12_DEPTH_STENCIL_DESC(D3D12_DEFAULT);
+	textDepthStencilDesc.DepthEnable = false;
+	textpsoDesc.DepthStencilState = textDepthStencilDesc;
+
+	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&textpsoDesc, IID_PPV_ARGS(&mTextPSO)));
+}
+
+void Game::BuildFonts()
+{
+	// Load Font
+	mArialFont = LoadFont(L"../../Textures/Arial.fnt", mClientWidth, mClientHeight);
+
+	// Load the image from file
+	D3D12_RESOURCE_DESC fontTextureDesc;
+	int fontImageBytesPerRow;
+	BYTE* fontImageData;
+	int fontImageSize = d3dUtil::LoadImageDataFromFile(
+		&fontImageData, fontTextureDesc, L"../../Textures/Arial.png", fontImageBytesPerRow);
+
+	if (fontImageSize <= 0)
+	{
+		throw DxException();
+	}
+
+	// create the font texture resource
+	ThrowIfFailed(md3dDevice->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+		D3D12_HEAP_FLAG_NONE,
+		&fontTextureDesc,
+		D3D12_RESOURCE_STATE_COPY_DEST,
+		nullptr,
+		IID_PPV_ARGS(&mArialFont.textureBuffer)));
+
+	mArialFont.textureBuffer->SetName(L"Font Texture Buffer Resource Heap");
+	
+	ID3D12Resource* fontTextureBufferUploadHeap;
+	UINT64 fontTextureUploadBufferSize;
+	md3dDevice->GetCopyableFootprints(&fontTextureDesc, 0, 1, 0, nullptr, nullptr, nullptr, &fontTextureUploadBufferSize);
+
+	// create an upload heap to copy the texture to the gpu
+	ThrowIfFailed(md3dDevice->CreateCommittedResource(
+		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+		D3D12_HEAP_FLAG_NONE, // no flags
+		&CD3DX12_RESOURCE_DESC::Buffer(fontTextureUploadBufferSize),
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		IID_PPV_ARGS(&fontTextureBufferUploadHeap)));
+	fontTextureBufferUploadHeap->SetName(L"Font Texture Buffer Upload Resource Heap");
+	
+
+	// store font image in upload heap
+	D3D12_SUBRESOURCE_DATA fontTextureData = {};
+	fontTextureData.pData = &fontImageData[0]; // pointer to our image data
+	fontTextureData.RowPitch = fontImageBytesPerRow; // size of all our triangle vertex data
+	fontTextureData.SlicePitch = fontImageBytesPerRow * fontTextureDesc.Height; // also the size of our triangle vertex data
+
+	// Now we copy the upload buffer contents to the default heap
+	UpdateSubresources(mCommandList.Get(), mArialFont.textureBuffer, fontTextureBufferUploadHeap, 0, 0, 1, &fontTextureData);
+
+	// transition the texture default heap to a pixel shader resource (we will be sampling from this heap in the pixel shader to get the color of pixels)
+	mCommandList->ResourceBarrier(
+		1, &CD3DX12_RESOURCE_BARRIER::Transition(
+			mArialFont.textureBuffer, D3D12_RESOURCE_STATE_COPY_DEST, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+	
+	// create an srv for the font
+	D3D12_SHADER_RESOURCE_VIEW_DESC fontsrvDesc = {};
+	fontsrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	fontsrvDesc.Format = fontTextureDesc.Format;
+	fontsrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	fontsrvDesc.Texture2D.MipLevels = 1;
+
+	// we need to get the next descriptor location in the descriptor heap to store this srv
+	auto srvHandleSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	mArialFont.srvHandle = CD3DX12_GPU_DESCRIPTOR_HANDLE(mSrvDescriptorHeap->GetGPUDescriptorHandleForHeapStart(), 5, srvHandleSize);
+	
+	CD3DX12_CPU_DESCRIPTOR_HANDLE srvHandle(mSrvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), 5, srvHandleSize);
+	md3dDevice->CreateShaderResourceView(mArialFont.textureBuffer, &fontsrvDesc, srvHandle);
 }
 
 void Game::BuildFrameResources()
@@ -712,4 +848,171 @@ std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> Game::GetStaticSamplers()
 		pointWrap, pointClamp,
 		linearWrap, linearClamp,
 		anisotropicWrap, anisotropicClamp };
+}
+
+
+Font Game::LoadFont(LPCWSTR filename, int windowWidth, int windowHeight)
+{
+	std::wifstream fs;
+	fs.open(filename);
+
+	Font font;
+	std::wstring tmp;
+	int startpos;
+
+	// extract font name
+	fs >> tmp >> tmp; // info face="Arial"
+	startpos = tmp.find(L"\"") + 1;
+	font.name = tmp.substr(startpos, tmp.size() - startpos - 1);
+
+	// get font size
+	fs >> tmp; // size=73
+	startpos = tmp.find(L"=") + 1;
+	font.size = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+	// bold, italic, charset, unicode, stretchH, smooth, aa, padding, spacing
+	fs >> tmp >> tmp >> tmp >> tmp >> tmp >> tmp >> tmp; // bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 
+
+	// get padding
+	fs >> tmp; // padding=5,5,5,5 
+	startpos = tmp.find(L"=") + 1;
+	tmp = tmp.substr(startpos, tmp.size() - startpos); // 5,5,5,5
+
+	// get up padding
+	startpos = tmp.find(L",") + 1;
+	font.toppadding = std::stoi(tmp.substr(0, startpos)) / (float)windowWidth;
+
+	// get right padding
+	tmp = tmp.substr(startpos, tmp.size() - startpos);
+	startpos = tmp.find(L",") + 1;
+	font.rightpadding = std::stoi(tmp.substr(0, startpos)) / (float)windowWidth;
+
+	// get down padding
+	tmp = tmp.substr(startpos, tmp.size() - startpos);
+	startpos = tmp.find(L",") + 1;
+	font.bottompadding = std::stoi(tmp.substr(0, startpos)) / (float)windowWidth;
+
+	// get left padding
+	tmp = tmp.substr(startpos, tmp.size() - startpos);
+	font.leftpadding = std::stoi(tmp) / (float)windowWidth;
+
+	fs >> tmp; // spacing=0,0
+
+	// get lineheight (how much to move down for each line), and normalize (between 0.0 and 1.0 based on size of font)
+	fs >> tmp >> tmp; // common lineHeight=95
+	startpos = tmp.find(L"=") + 1;
+	font.lineHeight = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)windowHeight;
+
+	// get base height (height of all characters), and normalize (between 0.0 and 1.0 based on size of font)
+	fs >> tmp; // base=68
+	startpos = tmp.find(L"=") + 1;
+	font.baseHeight = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)windowHeight;
+
+	// get texture width
+	fs >> tmp; // scaleW=512
+	startpos = tmp.find(L"=") + 1;
+	font.textureWidth = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+	// get texture height
+	fs >> tmp; // scaleH=512
+	startpos = tmp.find(L"=") + 1;
+	font.textureHeight = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+	// get pages, packed, page id
+	fs >> tmp >> tmp; // pages=1 packed=0
+	fs >> tmp >> tmp; // page id=0
+
+	// get texture filename
+	std::wstring wtmp;
+	fs >> wtmp; // file="Arial.png"
+	startpos = wtmp.find(L"\"") + 1;
+	font.fontImage = wtmp.substr(startpos, wtmp.size() - startpos - 1);
+
+	// get number of characters
+	fs >> tmp >> tmp; // chars count=97
+	startpos = tmp.find(L"=") + 1;
+	font.numCharacters = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+	// initialize the character list
+	font.CharList = new FontChar[font.numCharacters];
+
+	for (int c = 0; c < font.numCharacters; ++c)
+	{
+		// get unicode id
+		fs >> tmp >> tmp; // char id=0
+		startpos = tmp.find(L"=") + 1;
+		font.CharList[c].id = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+		// get x
+		fs >> tmp; // x=392
+		startpos = tmp.find(L"=") + 1;
+		font.CharList[c].u = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)font.textureWidth;
+
+		// get y
+		fs >> tmp; // y=340
+		startpos = tmp.find(L"=") + 1;
+		font.CharList[c].v = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)font.textureHeight;
+
+		// get width
+		fs >> tmp; // width=47
+		startpos = tmp.find(L"=") + 1;
+		tmp = tmp.substr(startpos, tmp.size() - startpos);
+		font.CharList[c].width = (float)std::stoi(tmp) / (float)windowWidth;
+		font.CharList[c].twidth = (float)std::stoi(tmp) / (float)font.textureWidth;
+
+		// get height
+		fs >> tmp; // height=57
+		startpos = tmp.find(L"=") + 1;
+		tmp = tmp.substr(startpos, tmp.size() - startpos);
+		font.CharList[c].height = (float)std::stoi(tmp) / (float)windowHeight;
+		font.CharList[c].theight = (float)std::stoi(tmp) / (float)font.textureHeight;
+
+		// get xoffset
+		fs >> tmp; // xoffset=-6
+		startpos = tmp.find(L"=") + 1;
+		font.CharList[c].xoffset = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)windowWidth;
+
+		// get yoffset
+		fs >> tmp; // yoffset=16
+		startpos = tmp.find(L"=") + 1;
+		font.CharList[c].yoffset = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)windowHeight;
+
+		// get xadvance
+		fs >> tmp; // xadvance=65
+		startpos = tmp.find(L"=") + 1;
+		font.CharList[c].xadvance = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos)) / (float)windowWidth;
+
+		// get page
+		// get channel
+		fs >> tmp >> tmp; // page=0    chnl=0
+	}
+
+	// get number of kernings
+	fs >> tmp >> tmp; // kernings count=96
+	startpos = tmp.find(L"=") + 1;
+	font.numKernings = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+	// initialize the kernings list
+	font.KerningsList = new FontKerning[font.numKernings];
+
+	for (int k = 0; k < font.numKernings; ++k)
+	{
+		// get first character
+		fs >> tmp >> tmp; // kerning first=87
+		startpos = tmp.find(L"=") + 1;
+		font.KerningsList[k].firstid = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+		// get second character
+		fs >> tmp; // second=45
+		startpos = tmp.find(L"=") + 1;
+		font.KerningsList[k].secondid = std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+
+		// get amount
+		fs >> tmp; // amount=-1
+		startpos = tmp.find(L"=") + 1;
+		int t = (float)std::stoi(tmp.substr(startpos, tmp.size() - startpos));
+		font.KerningsList[k].amount = (float)t / (float)windowWidth;
+	}
+
+	return font;
 }

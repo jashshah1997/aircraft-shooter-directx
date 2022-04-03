@@ -1,6 +1,7 @@
 #include "World.hpp"
 #include "Player.h"
 #include "StateStack.h"
+#include "TextUtil.h"
 
 //!
 //! A Space Shooter game.
@@ -53,6 +54,7 @@ private:
 	void BuildMaterials();
 	void BuildRenderItems();
 	void DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems);
+	void BuildFonts();
 
 	std::array<const CD3DX12_STATIC_SAMPLER_DESC, 6> GetStaticSamplers();
 private:
@@ -77,6 +79,7 @@ private:
 	std::unordered_map<std::string, ComPtr<ID3DBlob>> mShaders;
 
 	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
+	std::vector<D3D12_INPUT_ELEMENT_DESC> mTextInputLayout;
 
 	ComPtr<ID3D12PipelineState> mOpaquePSO = nullptr;
 
@@ -101,6 +104,24 @@ private:
 	World mWorld;
 	Player mPlayer;
 	StateStack mStateStack;
+
+	// pso containing a pipeline state
+	ComPtr<ID3D12PipelineState> mTextPSO; 
+
+	Font mArialFont; // this will store our arial font information
+
+	int maxNumTextCharacters = 1024; // the maximum number of characters you can render during a frame. This is just used to make sure
+									// there is enough memory allocated for the text vertex buffer each frame
+
+	static const int mFrameBufferCount = 3; // number of buffers we want, 2 for double buffering, 3 for tripple buffering
+	ID3D12Resource* textVertexBuffer[mFrameBufferCount];
+	D3D12_VERTEX_BUFFER_VIEW textVertexBufferView[mFrameBufferCount]; // a view for our text vertex buffer
+	UINT8* textVBGPUAddress[mFrameBufferCount]; // this is a pointer to each of the text constant buffers
+
+	Font LoadFont(LPCWSTR filename, int windowWidth, int windowHeight); // load a font
+	void RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale = XMFLOAT2(1.0f, 1.0f), XMFLOAT2 padding = XMFLOAT2(0.5f, 0.0f), XMFLOAT4 color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+
+
 
 public:
 	std::vector<std::unique_ptr<RenderItem>>& getRenderItems() { return mAllRitems; }
