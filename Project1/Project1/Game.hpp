@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "StateStack.h"
 #include "TextUtil.h"
+#include <vector>
 
 //!
 //! A Space Shooter game.
@@ -22,7 +23,7 @@ public:
 	~Game();
 
 	virtual bool Initialize()override;
-	void RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale = XMFLOAT2(1.0f, 1.0f), XMFLOAT2 padding = XMFLOAT2(0.5f, 0.0f), XMFLOAT4 color = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+	void RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale = XMFLOAT2(1.0f, 1.0f), std::vector<XMFLOAT4> color = { XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f) }, XMFLOAT2 padding = XMFLOAT2(0.5f, 0.0f));
 	Font mArialFont; // this will store our arial font information
 
 private:

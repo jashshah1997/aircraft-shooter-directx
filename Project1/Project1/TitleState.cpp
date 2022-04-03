@@ -28,7 +28,7 @@ bool TitleState::handleEvent(bool isKeyPressed)
 	if (!isKeyPressed) return true;
 
 	requestStackPop();
-	requestStackPush(States::ID::Game);
+	requestStackPush(States::ID::Menu);
 
 	return true;
 }

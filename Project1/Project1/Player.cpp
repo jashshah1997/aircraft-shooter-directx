@@ -17,6 +17,7 @@ void Player::initializeKeyBindings()
 	mKeyBinding[VK_UP] = MoveUp;
 	mKeyBinding[VK_DOWN] = MoveDown;
 	mKeyBinding[VK_LBUTTON] = Shoot;
+	mKeyBinding[VK_SPACE] = Shoot;
 
 	mKeyBinding['A'] = MoveLeft;
 	mKeyBinding['D'] = MoveRight;

@@ -18,9 +18,4 @@ public:
 private:
 	World* mWorld;
 	Game* mGame;
-	//sf::Sprite			mBackgroundSprite;
-	//sf::Text			mText;
-
-	//bool				mShowText;
-	//sf::Time			mTextEffectTime;
 };

@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "GameState.h"
 #include "TitleState.h"
+#include "MenuState.h"
 #include "StateIdentifiers.h"
 
 const int gNumFrameResources = 3;
@@ -12,6 +13,7 @@ Game::Game(HINSTANCE hInstance)
 {
 	mStateStack.registerState<GameState>(States::ID::Game);
 	mStateStack.registerState<TitleState>(States::ID::Title);
+	mStateStack.registerState<MenuState>(States::ID::Menu);
 	mStateStack.pushState(States::ID::Title);
 }
 
@@ -1045,7 +1047,7 @@ Font Game::LoadFont(LPCWSTR filename, int windowWidth, int windowHeight)
 	return font;
 }
 
-void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale, XMFLOAT2 padding, XMFLOAT4 color)
+void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale, std::vector<XMFLOAT4> color, XMFLOAT2 padding)
 {
 	// clear the depth buffer so we can draw over everything
 	mCommandList->ClearDepthStencilView(DepthStencilView(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
@@ -1063,6 +1065,7 @@ void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale
 	mCommandList->SetGraphicsRootDescriptorTable(0, font.srvHandle);
 
 	int numCharacters = 0;
+	int wordCount = 0;
 
 	float topLeftScreenX = (pos.x * 2.0f) - 1.0f;
 	float topLeftScreenY = ((1.0f - pos.y) * 2.0f) - 1.0f;
@@ -1095,6 +1098,7 @@ void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale
 		// new line
 		if (c == L'\n')
 		{
+			wordCount++;
 			x = topLeftScreenX;
 			y -= (font.lineHeight + verticalPadding) * scale.y;
 			continue;
@@ -1108,10 +1112,10 @@ void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale
 		if (i > 0)
 			kerning = font.GetKerning(lastChar, c);
 
-		vert[numCharacters] = TextVertex(color.x,
-			color.y,
-			color.z,
-			color.w,
+		vert[numCharacters] = TextVertex(color[wordCount].x,
+			color[wordCount].y,
+			color[wordCount].z,
+			color[wordCount].w,
 			fc->u,
 			fc->v,
 			fc->twidth,

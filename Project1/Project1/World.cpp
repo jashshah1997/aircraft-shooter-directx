@@ -88,6 +88,7 @@ void World::draw(States::ID id)
 		mTitleSprite->setPosition(10, 1, 6);
 		break;
 	case States::ID::Menu:
+		mTitleSprite->setPosition(10, 1, 6);
 		break;
 	case States::ID::Game:
 		mTitleSprite->setPosition(0, -1, 0);
