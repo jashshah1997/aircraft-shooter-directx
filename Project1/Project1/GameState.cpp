@@ -32,6 +32,18 @@ bool GameState::handleEvent(bool isKeyPressed)
 	InputCommandQueue& commands = mWorld->getInputCommandQueue();
 	mPlayer->handleEvent(commands);
 
+	if (d3dUtil::IsKeyDown('P'))
+	{
+		if (!pausePressed) {
+			requestStackPop();
+			requestStackPush(States::ID::Pause);
+			pausePressed = true;
+		}
+	}
+	else {
+		pausePressed = false;
+	}
+
 	// Escape pressed, trigger the pause screen
 	//if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 	//	requestStackPush(States::Pause);

@@ -2,6 +2,7 @@
 #include "GameState.h"
 #include "TitleState.h"
 #include "MenuState.h"
+#include "PauseState.h"
 #include "StateIdentifiers.h"
 
 const int gNumFrameResources = 3;
@@ -14,6 +15,7 @@ Game::Game(HINSTANCE hInstance)
 	mStateStack.registerState<GameState>(States::ID::Game);
 	mStateStack.registerState<TitleState>(States::ID::Title);
 	mStateStack.registerState<MenuState>(States::ID::Menu);
+	mStateStack.registerState<PauseState>(States::ID::Pause);
 	mStateStack.pushState(States::ID::Title);
 }
 
@@ -116,7 +118,7 @@ void Game::Draw(const GameTimer& gt)
 
 	// A command list can be reset after it has been added to the command queue via ExecuteCommandList.
 	// Reusing the command list reuses memory.
-	ThrowIfFailed(mCommandList->Reset(cmdListAlloc.Get(), mOpaquePSO.Get()));
+	ThrowIfFailed(mCommandList->Reset(cmdListAlloc.Get(), mPSOs["opaque"].Get()));
 
 	mCommandList->RSSetViewports(1, &mScreenViewport);
 	mCommandList->RSSetScissorRects(1, &mScissorRect);
@@ -140,7 +142,8 @@ void Game::Draw(const GameTimer& gt)
 	auto passCB = mCurrFrameResource->PassCB->Resource();
 	mCommandList->SetGraphicsRootConstantBufferView(2, passCB->GetGPUVirtualAddress());
 
-	DrawRenderItems(mCommandList.Get(), mOpaqueRitems);
+	mCommandList->SetPipelineState(mPSOs["alphaTested"].Get());
+	DrawRenderItems(mCommandList.Get(), mRitemLayer[(int)RenderLayer::AlphaTested]);
 	mStateStack.draw();
 
 	// Indicate a state transition on the resource usage.
@@ -347,11 +350,23 @@ void Game::LoadTextures()
 	auto TitleScreenTex = std::make_unique<Texture>();
 	TitleScreenTex->Name = "TitleScreenTex";
 	TitleScreenTex->Filename = L"../../Textures/TitleScreen.dds";
+	
 	ThrowIfFailed(DirectX::CreateDDSTextureFromFile12(md3dDevice.Get(),
 		mCommandList.Get(), TitleScreenTex->Filename.c_str(),
 		TitleScreenTex->Resource, TitleScreenTex->UploadHeap));
 
 	mTextures[TitleScreenTex->Name] = std::move(TitleScreenTex);
+
+	// Transparent Screen
+	auto TransparentScreenTex = std::make_unique<Texture>();
+	TransparentScreenTex->Name = "TransparentTex";
+	TransparentScreenTex->Filename = L"../../Textures/Transparent.dds";
+
+	ThrowIfFailed(DirectX::CreateDDSTextureFromFile12(md3dDevice.Get(),
+		mCommandList.Get(), TransparentScreenTex->Filename.c_str(),
+		TransparentScreenTex->Resource, TransparentScreenTex->UploadHeap));
+
+	mTextures[TransparentScreenTex->Name] = std::move(TransparentScreenTex);
 }
 
 void Game::BuildRootSignature()
@@ -404,7 +419,7 @@ void Game::BuildDescriptorHeaps()
 	// Create the SRV heap.
 	//
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
-	srvHeapDesc.NumDescriptors = 6;
+	srvHeapDesc.NumDescriptors = 7;
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	ThrowIfFailed(md3dDevice->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&mSrvDescriptorHeap)));
@@ -419,6 +434,7 @@ void Game::BuildDescriptorHeaps()
 	auto DesertTex = mTextures["DesertTex"]->Resource;
 	auto BulletTex = mTextures["BulletTex"]->Resource;
 	auto TitleScreenTex = mTextures["TitleScreenTex"]->Resource;
+	auto TransparentTex = mTextures["TransparentTex"]->Resource;
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 
@@ -463,10 +479,24 @@ void Game::BuildDescriptorHeaps()
 	hDescriptor.Offset(1, mCbvSrvDescriptorSize);
 	srvDesc.Format = TitleScreenTex->GetDesc().Format;
 	md3dDevice->CreateShaderResourceView(TitleScreenTex.Get(), &srvDesc, hDescriptor);
+
+	//Transparent Screen Descriptor
+	hDescriptor.Offset(1, mCbvSrvDescriptorSize);
+	srvDesc.Format = TransparentTex->GetDesc().Format;
+	md3dDevice->CreateShaderResourceView(TransparentTex.Get(), &srvDesc, hDescriptor);
 }
 
 void Game::BuildShadersAndInputLayout()
 {
+
+	const D3D_SHADER_MACRO alphaTestDefines[] =
+	{
+		//macro name, macro definition
+		"ALPHA_TEST", "0",    //"1" or "0" doesn't really set anything on and off
+		NULL,NULL
+	};
+	mShaders["alphaTestedPS"] = d3dUtil::CompileShader(L"Shaders\\Default.hlsl", alphaTestDefines, "PS", "ps_5_1");
+
 	mShaders["standardVS"] = d3dUtil::CompileShader(L"Shaders\\Default.hlsl", nullptr, "VS", "vs_5_1");
 	mShaders["opaquePS"] = d3dUtil::CompileShader(L"Shaders\\Default.hlsl", nullptr, "PS", "ps_5_1");
 
@@ -573,7 +603,7 @@ void Game::BuildPSOs()
 	opaquePsoDesc.SampleDesc.Count = m4xMsaaState ? 4 : 1;
 	opaquePsoDesc.SampleDesc.Quality = m4xMsaaState ? (m4xMsaaQuality - 1) : 0;
 	opaquePsoDesc.DSVFormat = mDepthStencilFormat;
-	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&opaquePsoDesc, IID_PPV_ARGS(&mOpaquePSO)));
+	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&opaquePsoDesc, IID_PPV_ARGS(&mPSOs["opaque"])));
 
 	// create the text pipeline state object (PSO)
 
@@ -623,7 +653,32 @@ void Game::BuildPSOs()
 	textDepthStencilDesc.DepthEnable = false;
 	textpsoDesc.DepthStencilState = textDepthStencilDesc;
 
-	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&textpsoDesc, IID_PPV_ARGS(&mTextPSO)));
+	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&textpsoDesc, IID_PPV_ARGS(&mPSOs["text"])));
+
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC alphaTestedPsoDesc = opaquePsoDesc;
+
+	D3D12_RENDER_TARGET_BLEND_DESC transparencyBlendDesc;
+	transparencyBlendDesc.BlendEnable = true;
+	transparencyBlendDesc.LogicOpEnable = false;
+	transparencyBlendDesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	transparencyBlendDesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	transparencyBlendDesc.BlendOp = D3D12_BLEND_OP_ADD;
+	transparencyBlendDesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+	transparencyBlendDesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+	transparencyBlendDesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+	transparencyBlendDesc.LogicOp = D3D12_LOGIC_OP_NOOP;
+	transparencyBlendDesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	alphaTestedPsoDesc.PS =
+	{
+		reinterpret_cast<BYTE*>(mShaders["alphaTestedPS"]->GetBufferPointer()),
+		mShaders["alphaTestedPS"]->GetBufferSize()
+	};
+	alphaTestedPsoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	alphaTestedPsoDesc.BlendState.RenderTarget[0] = transparencyBlendDesc;
+	alphaTestedPsoDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	ThrowIfFailed(md3dDevice->CreateGraphicsPipelineState(&alphaTestedPsoDesc, IID_PPV_ARGS(&mPSOs["alphaTested"])));
 }
 
 void Game::BuildFonts()
@@ -692,9 +747,9 @@ void Game::BuildFonts()
 
 	// we need to get the next descriptor location in the descriptor heap to store this srv
 	mSrvHandlSize = md3dDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	mArialFont.srvHandle = CD3DX12_GPU_DESCRIPTOR_HANDLE(mSrvDescriptorHeap->GetGPUDescriptorHandleForHeapStart(), 5, mSrvHandlSize);
+	mArialFont.srvHandle = CD3DX12_GPU_DESCRIPTOR_HANDLE(mSrvDescriptorHeap->GetGPUDescriptorHandleForHeapStart(), 6, mSrvHandlSize);
 	
-	CD3DX12_CPU_DESCRIPTOR_HANDLE srvHandle(mSrvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), 5, mSrvHandlSize);
+	CD3DX12_CPU_DESCRIPTOR_HANDLE srvHandle(mSrvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(), 6, mSrvHandlSize);
 	md3dDevice->CreateShaderResourceView(mArialFont.textureBuffer, &fontsrvDesc, srvHandle);
 
 	for (int i = 0; i < mFrameBufferCount; ++i)
@@ -778,15 +833,27 @@ void Game::BuildMaterials()
 	TitleScreen->Roughness = 0.2f;
 
 	mMaterials["TitleScreen"] = std::move(TitleScreen);
+
+	auto TransparentScreen = std::make_unique<Material>();
+	TransparentScreen->Name = "Transparent";
+	TransparentScreen->MatCBIndex = 5;
+	TransparentScreen->DiffuseSrvHeapIndex = 5;
+	TransparentScreen->DiffuseAlbedo = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	TransparentScreen->FresnelR0 = XMFLOAT3(0.05f, 0.05f, 0.05f);
+	TransparentScreen->Roughness = 0.2f;
+
+	mMaterials["Transparent"] = std::move(TransparentScreen);
 }
 
 void Game::BuildRenderItems()
 {
 	mWorld.buildScene();
 
-	// All the render items are opaque.
 	for (auto& e : mAllRitems)
-		mOpaqueRitems.push_back(e.get());
+	{
+		mRitemLayer[(int)RenderLayer::Opaque].push_back(e.get());
+		mRitemLayer[(int)RenderLayer::AlphaTested].push_back(e.get());
+	}
 }
 
 void Game::DrawRenderItems(ID3D12GraphicsCommandList* cmdList, const std::vector<RenderItem*>& ritems)
@@ -1053,7 +1120,7 @@ void Game::RenderText(Font font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale
 	mCommandList->ClearDepthStencilView(DepthStencilView(), D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 	// set the text pipeline state object
-	mCommandList->SetPipelineState(mTextPSO.Get());
+	mCommandList->SetPipelineState(mPSOs["text"].Get());
 
 	// this way we only need 4 vertices per quad rather than 6 if we were to use a triangle list topology
 	mCommandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

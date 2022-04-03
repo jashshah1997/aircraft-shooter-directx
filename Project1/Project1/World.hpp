@@ -41,6 +41,7 @@ private:
 	SceneNode*							mSceneGraph;
 	SceneNode*							mTitleGraph;
 	SpriteNode*							mTitleSprite;
+	SpriteNode*							mTransparent;
 
 	std::array<SceneNode*, LayerCount>	mSceneLayers;
 	XMFLOAT4							mWorldBounds;

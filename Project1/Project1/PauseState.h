@@ -1,16 +1,14 @@
 #pragma once
 
 #include "State.h"
-#include "World.hpp"
-#include "Player.h"
 
 class Game;
 class GameTimer;
 
-class GameState : public State
+class PauseState : public State
 {
 public:
-	GameState(StateStack& stack, Context context);
+	PauseState(StateStack& stack, Context context);
 
 	virtual void		draw();
 	virtual bool		update(const GameTimer& gt);
@@ -18,8 +16,9 @@ public:
 
 
 private:
-	World*				mWorld;
-	Player*				mPlayer;
-	Game*				mGame;
-	bool				pausePressed = true;
+	World* mWorld;
+	Game* mGame;
+
+	static constexpr XMFLOAT4 NEUTRAL_COLOR{ 1.0, 1.0, 1.0, 1.0 };
+	bool pausePressed = true;
 };

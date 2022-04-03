@@ -4,6 +4,13 @@
 #include "TextUtil.h"
 #include <vector>
 
+enum class RenderLayer : int
+{
+	Opaque = 0,
+	AlphaTested,
+	Count
+};
+
 //!
 //! A Space Shooter game.
 //! Author Jash Shah.
@@ -84,16 +91,18 @@ private:
 
 	std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
 	std::vector<D3D12_INPUT_ELEMENT_DESC> mTextInputLayout;
+	
+	// PSOs
+	std::unordered_map<std::string, ComPtr<ID3D12PipelineState>> mPSOs;
 
-	ComPtr<ID3D12PipelineState> mOpaquePSO = nullptr;
 
 	// List of all the render items.
 	std::vector<std::unique_ptr<RenderItem>> mAllRitems;
 
-	// Render items divided by PSO.
-	std::vector<RenderItem*> mOpaqueRitems;
-
 	PassConstants mMainPassCB;
+
+	// Render items divided by PSO.
+	std::vector<RenderItem*> mRitemLayer[(int)RenderLayer::Count];
 
 	//XMFLOAT3 mEyePos = { 0.0f, 0.0f, -10.0f };
 	//XMFLOAT4X4 mView = MathHelper::Identity4x4();
@@ -108,9 +117,6 @@ private:
 	World mWorld;
 	Player mPlayer;
 	StateStack mStateStack;
-
-	// pso containing a pipeline state
-	ComPtr<ID3D12PipelineState> mTextPSO; 
 
 
 	int maxNumTextCharacters = 1024; // the maximum number of characters you can render during a frame. This is just used to make sure

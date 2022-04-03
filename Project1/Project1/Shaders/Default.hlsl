@@ -20,17 +20,14 @@
 // Include structures and functions for lighting.
 #include "LightingUtil.hlsl"
 
-//step14
-Texture2D    gDiffuseMap : register(t0);
+Texture2D gDiffuseMap : register(t0);
+
 SamplerState gsamPointWrap : register(s0);
-
-//SamplerState gsamPointWrap : register(s0);
-//SamplerState gsamPointClamp : register(s1);
-//SamplerState gsamLinearWrap : register(s2);
-//SamplerState gsamLinearClamp : register(s3);
-//SamplerState gsamAnisotropicWrap : register(s4);
-//SamplerState gsamAnisotropicClamp : register(s5);
-
+SamplerState gsamPointClamp : register(s1);
+SamplerState gsamLinearWrap : register(s2);
+SamplerState gsamLinearClamp : register(s3);
+SamplerState gsamAnisotropicWrap : register(s4);
+SamplerState gsamAnisotropicClamp : register(s5);
 
 
 
@@ -70,50 +67,43 @@ cbuffer cbPass : register(b1)
 // Constant data that varies per material.
 cbuffer cbMaterial : register(b2)
 {
-	float4 gDiffuseAlbedo;
+    float4 gDiffuseAlbedo;
     float3 gFresnelR0;
-    float  gRoughness;
+    float gRoughness;
     float4x4 gMatTransform;
 };
 
 struct VertexIn
 {
-	float3 PosL    : POSITION;
+    float3 PosL : POSITION;
     float3 NormalL : NORMAL;
-    //step2
-	float2 TexC    : TEXCOORD;
+    float2 TexC : TEXCOORD;
 };
 
 struct VertexOut
 {
-	float4 PosH    : SV_POSITION;
-    float3 PosW    : POSITION;
+    float4 PosH : SV_POSITION;
+    float3 PosW : POSITION;
     float3 NormalW : NORMAL;
-    //step15
-	float2 TexC    : TEXCOORD;
+    float2 TexC : TEXCOORD;
 };
 
 VertexOut VS(VertexIn vin)
 {
-	VertexOut vout = (VertexOut)0.0f;
+    VertexOut vout = (VertexOut) 0.0f;
 	
     // Transform to world space.
     float4 posW = mul(float4(vin.PosL, 1.0f), gWorld);
     vout.PosW = posW.xyz;
 
     // Assumes nonuniform scaling; otherwise, need to use inverse-transpose of world matrix.
-    vout.NormalW = mul(vin.NormalL, (float3x3)gWorld);
+    vout.NormalW = mul(vin.NormalL, (float3x3) gWorld);
 
     // Transform to homogeneous clip space.
     vout.PosH = mul(posW, gViewProj);
 	
 	// Output vertex attributes for interpolation across triangle.
-    //step16:Texture coordinates represent 2D points in the texture plane. Thus, we can translate,
-    //rotate, and scale them like we could any otherpoint.
-    //gTexTransform and gMatTransform are variables used in the vertex shader to transform the input texture coordinates
-    //We use two separate texture transformation matrices gTexTransform and gMatTransform .
-    //Because sometimes it makes more sense for the material to transform the textures (for animated materials like water), but sometimes it makes more sense for the texture transform to be a property of the object.
-
+   
     float4 texC = mul(float4(vin.TexC, 0.0f, 1.0f), gTexTransform);
     vout.TexC = mul(texC, gMatTransform).xy;
 
@@ -122,15 +112,17 @@ VertexOut VS(VertexIn vin)
 
 float4 PS(VertexOut pin) : SV_Target
 {
-    //step17: we add a diffuse albedo texture map to specify the diffuse albedo
-    //component of our material
+    // we add a diffuse albedo texture map to specify the diffuse albedo component of our material
 
-    float4 diffuseAlbedo = gDiffuseMap.Sample(gsamPointWrap, pin.TexC) * gDiffuseAlbedo;
+    float4 diffuseAlbedo = gDiffuseMap.Sample(gsamAnisotropicWrap, pin.TexC) * gDiffuseAlbedo;
 
-    clip(diffuseAlbedo.a - 0.1f);
-
-    //float diffuseAlbedo2 = float4(0.9f, 0.9f, 1.0f, 1.0f);
-    //float4 diffuseAlbedo = gDiffuseMap.Sample(gsamLinear, pin.TexC) * diffuseAlbedo2;
+    //step7
+#ifdef ALPHA_TEST
+	// Discard pixel if texture alpha < 0.1.  We do this test as soon 
+	// as possible in the shader so that we can potentially exit the
+	// shader early, thereby skipping the rest of the shader code.
+	clip(diffuseAlbedo.a - 0.1f);
+#endif
 
     // Interpolating normal can unnormalize it, so renormalize it.
     pin.NormalW = normalize(pin.NormalW);
@@ -139,7 +131,7 @@ float4 PS(VertexOut pin) : SV_Target
     float3 toEyeW = normalize(gEyePosW - pin.PosW);
 
     // Light terms. Note that we are using diffuseAlbedo instead of gDiffuseAlbedo
-    float4 ambient = gAmbientLight*diffuseAlbedo;
+    float4 ambient = gAmbientLight * diffuseAlbedo;
 
     const float shininess = 1.0f - gRoughness;
     Material mat = { diffuseAlbedo, gFresnelR0, shininess };
@@ -154,5 +146,4 @@ float4 PS(VertexOut pin) : SV_Target
 
     return litColor;
 }
-
 

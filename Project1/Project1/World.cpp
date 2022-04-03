@@ -85,17 +85,21 @@ void World::draw(States::ID id)
 	case States::ID::None:
 		break;
 	case States::ID::Title:
-		mTitleSprite->setPosition(10, 1, 6);
+		mTitleSprite->setPosition(0, 1, 0);
+		mTransparent->setPosition(0, -2, 0);
 		break;
 	case States::ID::Menu:
-		mTitleSprite->setPosition(10, 1, 6);
+		mTitleSprite->setPosition(0, 1, 0);
+		mTransparent->setPosition(0, -2, 0);
 		break;
 	case States::ID::Game:
 		mTitleSprite->setPosition(0, -1, 0);
+		mTransparent->setPosition(0, -2, 0);
 		break;
 	case States::ID::Loading:
 		break;
 	case States::ID::Pause:
+		mTransparent->setPosition(0, 2, 0);
 		break;
 	default:
 		break;
@@ -171,11 +175,17 @@ void World::buildScene()
 
 	mSceneGraph->build();
 
-	std::unique_ptr<SpriteNode> titleSprite(new SpriteNode(mGame, "TitleScreen", true));
+	std::unique_ptr<SpriteNode> titleSprite(new SpriteNode(mGame, "TitleScreen", false));
 	mTitleSprite = (SpriteNode*)titleSprite.get();
-	mTitleSprite->setPosition(100, 0.5, 100);
-	mTitleSprite->setScale(9.0, 1.0, 6);
+	mTitleSprite->setPosition(0, 0.5, 0);
+	mTitleSprite->setScale(0.8, 1.0, 0.6);
 	mTitleGraph->attachChild(std::move(titleSprite));
+
+	std::unique_ptr<SpriteNode> transparentSprite(new SpriteNode(mGame, "Transparent", false));
+	mTransparent = (SpriteNode*)transparentSprite.get();
+	mTransparent->setPosition(0, -2, 0);
+	mTransparent->setScale(0.8, 1.0, 0.6);
+	mTitleGraph->attachChild(std::move(transparentSprite));
 
 	mTitleGraph->build();
 }
