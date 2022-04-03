@@ -26,6 +26,8 @@ public:
 	//! Get the input command queue
 	InputCommandQueue&					getInputCommandQueue();
 
+	void								reset();
+
 private:
 	enum Layer
 	{

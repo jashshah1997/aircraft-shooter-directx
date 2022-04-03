@@ -44,9 +44,5 @@ bool GameState::handleEvent(bool isKeyPressed)
 		pausePressed = false;
 	}
 
-	// Escape pressed, trigger the pause screen
-	//if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
-	//	requestStackPush(States::Pause);
-
 	return true;
 }

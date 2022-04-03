@@ -47,6 +47,7 @@ bool MenuState::handleEvent(bool isKeyPressed)
 	if (d3dUtil::IsKeyDown(VK_RETURN))
 	{
 		if (mPlayActive) {
+			mWorld->reset();
 			requestStackPop();
 			requestStackPush(States::ID::Game);
 		}
