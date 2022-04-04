@@ -1,0 +1,90 @@
+\hypertarget{struct_font}{}\doxysection{Font Struct Reference}
+\label{struct_font}\index{Font@{Font}}
+
+
+A structure containing font information.  
+
+
+
+
+{\ttfamily \#include $<$Text\+Util.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_font_a994bdd66bafcb424027084cc3f793556}\label{struct_font_a994bdd66bafcb424027084cc3f793556}} 
+float {\bfseries Get\+Kerning} (wchar\+\_\+t first, wchar\+\_\+t second)
+\begin{DoxyCompactList}\small\item\em this will return the amount of kerning we need to use for two characters \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a2416c72055d93a80707d084caa5b436e}\label{struct_font_a2416c72055d93a80707d084caa5b436e}} 
+\mbox{\hyperlink{struct_font_char}{Font\+Char}} $\ast$ {\bfseries Get\+Char} (wchar\+\_\+t c)
+\begin{DoxyCompactList}\small\item\em this will return a \mbox{\hyperlink{struct_font_char}{Font\+Char}} given a wide character \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_font_a893d49e8449aa075bb71f723257416f7}\label{struct_font_a893d49e8449aa075bb71f723257416f7}} 
+std\+::wstring {\bfseries name}
+\begin{DoxyCompactList}\small\item\em name of the font \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_acc2a30ba44d8c1c959462d18e7df2652}\label{struct_font_acc2a30ba44d8c1c959462d18e7df2652}} 
+std\+::wstring {\bfseries font\+Image}
+\item 
+\mbox{\Hypertarget{struct_font_aad7fe43db0254eccdbdaa2bf4884a140}\label{struct_font_aad7fe43db0254eccdbdaa2bf4884a140}} 
+int {\bfseries size}
+\begin{DoxyCompactList}\small\item\em size of font, lineheight and baseheight will be based on this as if this is a single unit (1.\+0) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a2680c352e5edb4d7bd3616b58e185086}\label{struct_font_a2680c352e5edb4d7bd3616b58e185086}} 
+float {\bfseries line\+Height}
+\begin{DoxyCompactList}\small\item\em how far to move down to next line, will be normalized \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a6732dbb3d443555f794cc7365e1211d3}\label{struct_font_a6732dbb3d443555f794cc7365e1211d3}} 
+float {\bfseries base\+Height}
+\begin{DoxyCompactList}\small\item\em height of all characters, will be normalized \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a6f32f6ace683de97f4f59a84af77622a}\label{struct_font_a6f32f6ace683de97f4f59a84af77622a}} 
+int {\bfseries texture\+Width}
+\begin{DoxyCompactList}\small\item\em width of the font texture \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a053acc1664fb0fec0d608d03b8b2333c}\label{struct_font_a053acc1664fb0fec0d608d03b8b2333c}} 
+int {\bfseries texture\+Height}
+\begin{DoxyCompactList}\small\item\em height of the font texture \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a63afee0b3ef097fefb146bcd761da65d}\label{struct_font_a63afee0b3ef097fefb146bcd761da65d}} 
+int {\bfseries num\+Characters}
+\begin{DoxyCompactList}\small\item\em number of characters in the font \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a43b9caf1f0b0cd8db7e27c1926edf59d}\label{struct_font_a43b9caf1f0b0cd8db7e27c1926edf59d}} 
+\mbox{\hyperlink{struct_font_char}{Font\+Char}} $\ast$ {\bfseries Char\+List}
+\begin{DoxyCompactList}\small\item\em list of characters \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_adb58b701f48c41bbc6cd5889afa2c389}\label{struct_font_adb58b701f48c41bbc6cd5889afa2c389}} 
+int {\bfseries num\+Kernings}
+\begin{DoxyCompactList}\small\item\em the number of kernings \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_ad8ce0a1082456830396f8f2178b9d6a6}\label{struct_font_ad8ce0a1082456830396f8f2178b9d6a6}} 
+\mbox{\hyperlink{struct_font_kerning}{Font\+Kerning}} $\ast$ {\bfseries Kernings\+List}
+\begin{DoxyCompactList}\small\item\em list to hold kerning values \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_afaeefcecf4569f492f2db26df1598d74}\label{struct_font_afaeefcecf4569f492f2db26df1598d74}} 
+ID3\+D12\+Resource $\ast$ {\bfseries texture\+Buffer}
+\begin{DoxyCompactList}\small\item\em the font texture resource \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_a36e64a767faac061eda1a98fd980ee24}\label{struct_font_a36e64a767faac061eda1a98fd980ee24}} 
+D3\+D12\+\_\+\+GPU\+\_\+\+DESCRIPTOR\+\_\+\+HANDLE {\bfseries srv\+Handle}
+\begin{DoxyCompactList}\small\item\em the font srv \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_font_abce9f83762009d3700d9be12e763f0da}{leftpadding}}
+\item 
+\mbox{\Hypertarget{struct_font_a3da41bfdb1f6d3ec2b4ee5ddc32c923f}\label{struct_font_a3da41bfdb1f6d3ec2b4ee5ddc32c923f}} 
+float {\bfseries toppadding}
+\item 
+\mbox{\Hypertarget{struct_font_a13b6ebf6d6f626018e76ac3b6ef00893}\label{struct_font_a13b6ebf6d6f626018e76ac3b6ef00893}} 
+float {\bfseries rightpadding}
+\item 
+\mbox{\Hypertarget{struct_font_aa3672fad0fc8082ccd35e02ebb515a00}\label{struct_font_aa3672fad0fc8082ccd35e02ebb515a00}} 
+float {\bfseries bottompadding}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A structure containing font information. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_font_abce9f83762009d3700d9be12e763f0da}\label{struct_font_abce9f83762009d3700d9be12e763f0da}} 
+\index{Font@{Font}!leftpadding@{leftpadding}}
+\index{leftpadding@{leftpadding}!Font@{Font}}
+\doxysubsubsection{\texorpdfstring{leftpadding}{leftpadding}}
+{\footnotesize\ttfamily float Font\+::leftpadding}
+
+these are how much the character is padded in the texture. We add padding to give sampling a little space so it does not accidentally padd the surrounding characters. We will need to subtract these paddings from the actual spacing between characters to remove the gaps you would otherwise see 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Project1/\+Project1/Text\+Util.\+h\end{DoxyCompactItemize}

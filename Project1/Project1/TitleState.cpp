@@ -14,7 +14,7 @@ TitleState::TitleState(StateStack& stack, Context context)
 void TitleState::draw()
 {
 	mWorld->draw(States::ID::Title);
-	mGame->RenderText(mGame->mArialFont, std::wstring(L"Press any key to continue: "), XMFLOAT2(0.2f, 0.5f), XMFLOAT2(1.0f, 1.0f));
+	mGame->RenderText(mGame->mArialFont, std::wstring(L"Press any key to continue"), XMFLOAT2(0.2f, 0.5f), XMFLOAT2(1.0f, 1.0f));
 }
 
 bool TitleState::update(const GameTimer& gt)

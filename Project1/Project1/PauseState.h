@@ -5,6 +5,7 @@
 class Game;
 class GameTimer;
 
+//! This class describes the state of the game while gameplay is paused
 class PauseState : public State
 {
 public:

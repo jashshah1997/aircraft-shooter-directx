@@ -7,6 +7,7 @@
 class Game;
 class GameTimer;
 
+//! This class describes the state of the game while gameplay is occurring
 class GameState : public State
 {
 public:

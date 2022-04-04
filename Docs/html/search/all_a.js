@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['none_0',['None',['../namespace_category.html#a2ff936dbd42aeae91fdfb6f8456a8ab0af5e99963224a9d7e0d16e4a782446ebf',1,'Category']]],
-  ['numframesdirty_1',['NumFramesDirty',['../struct_render_item.html#aca6ae2de91638af530fd5ce91fea3306',1,'RenderItem']]]
+  ['leftpadding_0',['leftpadding',['../struct_font.html#abce9f83762009d3700d9be12e763f0da',1,'Font']]],
+  ['light_1',['Light',['../struct_light.html',1,'']]],
+  ['lineheight_2',['lineHeight',['../struct_font.html#a2680c352e5edb4d7bd3616b58e185086',1,'Font']]]
 ];

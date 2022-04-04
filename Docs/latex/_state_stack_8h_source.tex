@@ -1,0 +1,85 @@
+\hypertarget{_state_stack_8h_source}{}\doxysection{State\+Stack.\+h}
+\label{_state_stack_8h_source}\index{Project1/Project1/StateStack.h@{Project1/Project1/StateStack.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}State.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}StateIdentifiers.h"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}ResourceIdentifiers.h"{}}}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <utility>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <functional>}}
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <map>}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{keyword}{class }\mbox{\hyperlink{class_game_timer}{GameTimer}};}
+\DoxyCodeLine{13 \textcolor{keyword}{class }\mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}};}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_state_stack}{StateStack}}}
+\DoxyCodeLine{17 \{}
+\DoxyCodeLine{18 \textcolor{keyword}{public}:}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{21     \textcolor{keyword}{enum} \mbox{\hyperlink{class_state_stack_af804142a55cd477767353e0abbcc218c}{Action}}}
+\DoxyCodeLine{22     \{}
+\DoxyCodeLine{23         Push,}
+\DoxyCodeLine{24         Pop,}
+\DoxyCodeLine{25         Clear,}
+\DoxyCodeLine{26     \};}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{keyword}{public}:}
+\DoxyCodeLine{30     \textcolor{keyword}{explicit}            \mbox{\hyperlink{class_state_stack}{StateStack}}(\mbox{\hyperlink{struct_state_1_1_context}{State::Context}} context);}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{33     \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{34     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_a9d64daa479c2cccad6f2ede77741a352}{registerState}}(States::ID stateID);}
+\DoxyCodeLine{35 }
+\DoxyCodeLine{37     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_a22c2b84575447cdcfe7fef102cb90847}{update}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{40     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_a0990b973b2a0bdf8fad2f326e564931a}{draw}}();}
+\DoxyCodeLine{41 }
+\DoxyCodeLine{43     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_afa0febbd38f2448721b6b5806d3dcda6}{handleEvent}}(\textcolor{keywordtype}{bool} isKeyPressed = \textcolor{keyword}{false});}
+\DoxyCodeLine{44 }
+\DoxyCodeLine{46     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_a80ed85f0fc13039e6f4c7dfef19e608f}{pushState}}(States::ID stateID);}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{49     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_a7e050a57b798295c2344f1318765b5ee}{popState}}();}
+\DoxyCodeLine{50 }
+\DoxyCodeLine{52     \textcolor{keywordtype}{void}                \mbox{\hyperlink{class_state_stack_a49f0703d4037c3bf63494e64cb09898d}{clearStates}}();}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{54     \textcolor{keywordtype}{bool}                isEmpty() \textcolor{keyword}{const};}
+\DoxyCodeLine{55 }
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{keyword}{private}:}
+\DoxyCodeLine{58     State::Ptr          createState(States::ID stateID);}
+\DoxyCodeLine{59     \textcolor{keywordtype}{void}                applyPendingChanges();}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{keyword}{private}:}
+\DoxyCodeLine{63     \textcolor{keyword}{struct }PendingChange}
+\DoxyCodeLine{64     \{}
+\DoxyCodeLine{65         \textcolor{keyword}{explicit}            PendingChange(\mbox{\hyperlink{class_state_stack_af804142a55cd477767353e0abbcc218c}{Action}} action, States::ID stateID = States::ID::None);}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67         \mbox{\hyperlink{class_state_stack_af804142a55cd477767353e0abbcc218c}{Action}}                action;}
+\DoxyCodeLine{68         States::ID          stateID;}
+\DoxyCodeLine{69     \};}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72 \textcolor{keyword}{private}:}
+\DoxyCodeLine{73     std::vector<State::Ptr>                             mStack;}
+\DoxyCodeLine{74     std::vector<PendingChange>                          mPendingList;}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \mbox{\hyperlink{struct_state_1_1_context}{State::Context}}                                        mContext;}
+\DoxyCodeLine{77     std::map<States::ID, std::function<State::Ptr()>>   mFactories;}
+\DoxyCodeLine{78 \};}
+\DoxyCodeLine{79 }
+\DoxyCodeLine{80 }
+\DoxyCodeLine{81 \textcolor{keyword}{template} <\textcolor{keyword}{typename} T>}
+\DoxyCodeLine{82 \textcolor{keywordtype}{void} \mbox{\hyperlink{class_state_stack_a9d64daa479c2cccad6f2ede77741a352}{StateStack::registerState}}(States::ID stateID)}
+\DoxyCodeLine{83 \{}
+\DoxyCodeLine{84     mFactories[stateID] = [\textcolor{keyword}{this}]()}
+\DoxyCodeLine{85     \{}
+\DoxyCodeLine{86         \textcolor{keywordflow}{return} State::Ptr(\textcolor{keyword}{new} T(*\textcolor{keyword}{this}, mContext));}
+\DoxyCodeLine{87     \};}
+\DoxyCodeLine{88 \}}
+
+\end{DoxyCode}

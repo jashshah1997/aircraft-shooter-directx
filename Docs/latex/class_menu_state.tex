@@ -1,0 +1,84 @@
+\hypertarget{class_menu_state}{}\doxysection{Menu\+State Class Reference}
+\label{class_menu_state}\index{MenuState@{MenuState}}
+
+
+This class describes the state of the game during the main menu.  
+
+
+
+
+{\ttfamily \#include $<$Menu\+State.\+h$>$}
+
+Inheritance diagram for Menu\+State\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_menu_state}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_menu_state_a6e7034c57bf83f24aa8f4321d3d210a5}\label{class_menu_state_a6e7034c57bf83f24aa8f4321d3d210a5}} 
+{\bfseries Menu\+State} (\mbox{\hyperlink{class_state_stack}{State\+Stack}} \&stack, \mbox{\hyperlink{struct_state_1_1_context}{Context}} context)
+\item 
+virtual void \mbox{\hyperlink{class_menu_state_aa557d6c3bf06bb3107ed780913a6b47f}{draw}} ()
+\begin{DoxyCompactList}\small\item\em Draws the needed objects for the current game state. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_menu_state_aa9042b948e308dbf60838eef01046b8e}{update}} (const \mbox{\hyperlink{class_game_timer}{Game\+Timer}} \&gt)
+\begin{DoxyCompactList}\small\item\em Handles logic of the current game state. \end{DoxyCompactList}\item 
+virtual bool \mbox{\hyperlink{class_menu_state_a00d7b45601395db62a7b96c949bd28b2}{handle\+Event}} (bool is\+Key\+Pressed=false)
+\begin{DoxyCompactList}\small\item\em Handles any one time events of the current game state. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+This class describes the state of the game during the main menu. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_menu_state_aa557d6c3bf06bb3107ed780913a6b47f}\label{class_menu_state_aa557d6c3bf06bb3107ed780913a6b47f}} 
+\index{MenuState@{MenuState}!draw@{draw}}
+\index{draw@{draw}!MenuState@{MenuState}}
+\doxysubsubsection{\texorpdfstring{draw()}{draw()}}
+{\footnotesize\ttfamily void Menu\+State\+::draw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Draws the needed objects for the current game state. 
+
+
+
+Implements \mbox{\hyperlink{class_state_ae261605bc40b7e3959ce5df5457e4942}{State}}.
+
+\mbox{\Hypertarget{class_menu_state_a00d7b45601395db62a7b96c949bd28b2}\label{class_menu_state_a00d7b45601395db62a7b96c949bd28b2}} 
+\index{MenuState@{MenuState}!handleEvent@{handleEvent}}
+\index{handleEvent@{handleEvent}!MenuState@{MenuState}}
+\doxysubsubsection{\texorpdfstring{handleEvent()}{handleEvent()}}
+{\footnotesize\ttfamily bool Menu\+State\+::handle\+Event (\begin{DoxyParamCaption}\item[{bool}]{is\+Key\+Pressed = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Handles any one time events of the current game state. 
+
+
+
+Implements \mbox{\hyperlink{class_state_a20e1622ce44ef254974650b1b7eb2e16}{State}}.
+
+\mbox{\Hypertarget{class_menu_state_aa9042b948e308dbf60838eef01046b8e}\label{class_menu_state_aa9042b948e308dbf60838eef01046b8e}} 
+\index{MenuState@{MenuState}!update@{update}}
+\index{update@{update}!MenuState@{MenuState}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily bool Menu\+State\+::update (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{class_game_timer}{Game\+Timer}} \&}]{gt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+Handles logic of the current game state. 
+
+
+
+Implements \mbox{\hyperlink{class_state_a3edbdcd142b9da8470d1f7d3fbe74e83}{State}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Project1/\+Project1/Menu\+State.\+h\item 
+Project1/\+Project1/Menu\+State.\+cpp\end{DoxyCompactItemize}

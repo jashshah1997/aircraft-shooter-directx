@@ -5,6 +5,7 @@
 
 #include <string>
 
+//! Vertex describing each letter to be rendered on the screen
 struct TextVertex {
 	TextVertex(float r, float g, float b, float a, float u, float v, float tw, float th, float x, float y, float w, float h) 
 		: color(r, g, b, a), texCoord(u, v, tw, th), pos(x, y, w, h) {}
@@ -13,60 +14,87 @@ struct TextVertex {
 	DirectX::XMFLOAT4 color;
 };
 
+//! A structure containing information about the text character
 struct FontChar
 {
-    // the unicode id
+    //! the unicode id
     int id;
 
-    // these need to be converted to texture coordinates 
-    // (where 0.0 is 0 and 1.0 is textureWidth of the font)
-    float u; // u texture coordinate
-    float v; // v texture coordinate
-    float twidth; // width of character on texture
-    float theight; // height of character on texture
+    //! these need to be converted to texture coordinates 
+    //! (where 0.0 is 0 and 1.0 is textureWidth of the font)
+    //! u texture coordinate
+    float u;
+    //! v texture coordinate
+    float v; 
+    //! width of character on texture
+    float twidth; 
+    //! height of character on texture
+    float theight; 
 
-    float width; // width of character in screen coords
-    float height; // height of character in screen coords
+    //! width of character in screen coords
+    float width; 
+    //! height of character in screen coords
+    float height; 
 
-    // these need to be normalized based on size of font
-    float xoffset; // offset from current cursor pos to left side of character
-    float yoffset; // offset from top of line to top of character
-    float xadvance; // how far to move to right for next character
+    //! these need to be normalized based on size of font
+    //! offset from current cursor pos to left side of character
+    float xoffset; 
+    //! offset from top of line to top of character
+    float yoffset; 
+    //! how far to move to right for next character
+    float xadvance; 
 };
 
+//! A structure containing information about the font padding
 struct FontKerning
 {
-    int firstid; // the first character
-    int secondid; // the second character
-    float amount; // the amount to add/subtract to second characters x
+    //! the first character
+    int firstid; 
+    //! the second character
+    int secondid; 
+    //! the amount to add/subtract to second characters x
+    float amount; 
 };
 
+//! A structure containing font information
 struct Font
 {
-    std::wstring name; // name of the font
+    //! name of the font
+    std::wstring name; 
     std::wstring fontImage;
-    int size; // size of font, lineheight and baseheight will be based on this as if this is a single unit (1.0)
-    float lineHeight; // how far to move down to next line, will be normalized
-    float baseHeight; // height of all characters, will be normalized
-    int textureWidth; // width of the font texture
-    int textureHeight; // height of the font texture
-    int numCharacters; // number of characters in the font
-    FontChar* CharList; // list of characters
-    int numKernings; // the number of kernings
-    FontKerning* KerningsList; // list to hold kerning values
-    ID3D12Resource* textureBuffer; // the font texture resource
-    D3D12_GPU_DESCRIPTOR_HANDLE srvHandle; // the font srv
+    //! size of font, lineheight and baseheight will be based on this as if this is a single unit (1.0)
+    int size; 
+    //! how far to move down to next line, will be normalized
+    float lineHeight;
+    //! height of all characters, will be normalized
+    float baseHeight;
+    //! width of the font texture
+    int textureWidth; 
+    //! height of the font texture
+    int textureHeight; 
+    //! number of characters in the font
+    int numCharacters; 
+    //! list of characters
+    FontChar* CharList;
+    //! the number of kernings
+    int numKernings; 
+    //! list to hold kerning values
+    FontKerning* KerningsList; 
+    //! the font texture resource
+    ID3D12Resource* textureBuffer; 
+    //! the font srv
+    D3D12_GPU_DESCRIPTOR_HANDLE srvHandle; 
 
-    // these are how much the character is padded in the texture. We
-    // add padding to give sampling a little space so it does not accidentally
-    // padd the surrounding characters. We will need to subtract these paddings
-    // from the actual spacing between characters to remove the gaps you would otherwise see
+    //! these are how much the character is padded in the texture. We
+    //! add padding to give sampling a little space so it does not accidentally
+    //! padd the surrounding characters. We will need to subtract these paddings
+    //! from the actual spacing between characters to remove the gaps you would otherwise see
     float leftpadding;
     float toppadding;
     float rightpadding;
     float bottompadding;
 
-    // this will return the amount of kerning we need to use for two characters
+    //! this will return the amount of kerning we need to use for two characters
     float GetKerning(wchar_t first, wchar_t second)
     {
         for (int i = 0; i < numKernings; ++i)
@@ -77,7 +105,7 @@ struct Font
         return 0.0f;
     }
 
-    // this will return a FontChar given a wide character
+    //! this will return a FontChar given a wide character
     FontChar* GetChar(wchar_t c)
     {
         for (int i = 0; i < numCharacters; ++i)

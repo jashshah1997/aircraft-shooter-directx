@@ -64,6 +64,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="class_game-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Game Class Reference</div></div>
 </div><!--header-->
@@ -93,6 +94,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9bda5763ea460634fef947be2530c8f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16354d232327f6c21319713bf6983674"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_game.html#a16354d232327f6c21319713bf6983674">Initialize</a> () override</td></tr>
 <tr class="separator:a16354d232327f6c21319713bf6983674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acae2fc6ed9458cb5b5229e3e08cd2b32"><td class="memItemLeft" align="right" valign="top"><a id="acae2fc6ed9458cb5b5229e3e08cd2b32" name="acae2fc6ed9458cb5b5229e3e08cd2b32"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RenderText</b> (<a class="el" href="struct_font.html">Font</a> font, std::wstring text, XMFLOAT2 pos, XMFLOAT2 scale=XMFLOAT2(1.0f, 1.0f), std::vector&lt; XMFLOAT4 &gt; color={ XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f) }, XMFLOAT2 padding=XMFLOAT2(0.5f, 0.0f))</td></tr>
+<tr class="memdesc:acae2fc6ed9458cb5b5229e3e08cd2b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render text on screen. <br /></td></tr>
+<tr class="separator:acae2fc6ed9458cb5b5229e3e08cd2b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab13f3fdd19f7fec4d64922e36cf3088"><td class="memItemLeft" align="right" valign="top"><a id="aab13f3fdd19f7fec4d64922e36cf3088" name="aab13f3fdd19f7fec4d64922e36cf3088"></a>
 std::vector&lt; std::unique_ptr&lt; <a class="el" href="struct_render_item.html">RenderItem</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getRenderItems</b> ()</td></tr>
 <tr class="separator:aab13f3fdd19f7fec4d64922e36cf3088"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -127,6 +132,13 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>Initialize</b
 <tr class="memitem:a50a6ba535971837f61c79d7f9390dc30 inherit pub_methods_class_d3_d_app"><td class="memItemLeft" align="right" valign="top"><a id="a50a6ba535971837f61c79d7f9390dc30" name="a50a6ba535971837f61c79d7f9390dc30"></a>
 virtual LRESULT&#160;</td><td class="memItemRight" valign="bottom"><b>MsgProc</b> (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)</td></tr>
 <tr class="separator:a50a6ba535971837f61c79d7f9390dc30 inherit pub_methods_class_d3_d_app"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a652a742bc682ee577c453d4b8815f4ea"><td class="memItemLeft" align="right" valign="top"><a id="a652a742bc682ee577c453d4b8815f4ea" name="a652a742bc682ee577c453d4b8815f4ea"></a>
+<a class="el" href="struct_font.html">Font</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mArialFont</b></td></tr>
+<tr class="memdesc:a652a742bc682ee577c453d4b8815f4ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">this will store our arial font information <br /></td></tr>
+<tr class="separator:a652a742bc682ee577c453d4b8815f4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -165,6 +177,9 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnMouseUp</b>
 <tr class="memitem:aa5270048920cd8a62dc07c7ed5e97622 inherit pro_methods_class_d3_d_app"><td class="memItemLeft" align="right" valign="top"><a id="aa5270048920cd8a62dc07c7ed5e97622" name="aa5270048920cd8a62dc07c7ed5e97622"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnMouseMove</b> (WPARAM btnState, int x, int y)</td></tr>
 <tr class="separator:aa5270048920cd8a62dc07c7ed5e97622 inherit pro_methods_class_d3_d_app"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b75c5ec1f12a9344bb50b4d5d216f2b inherit pro_methods_class_d3_d_app"><td class="memItemLeft" align="right" valign="top"><a id="a8b75c5ec1f12a9344bb50b4d5d216f2b" name="a8b75c5ec1f12a9344bb50b4d5d216f2b"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>OnAnyKeyDown</b> ()</td></tr>
+<tr class="separator:a8b75c5ec1f12a9344bb50b4d5d216f2b inherit pro_methods_class_d3_d_app"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a775e141865e0de4dc3f3a39281cbcf02 inherit pro_methods_class_d3_d_app"><td class="memItemLeft" align="right" valign="top"><a id="a775e141865e0de4dc3f3a39281cbcf02" name="a775e141865e0de4dc3f3a39281cbcf02"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>InitMainWindow</b> ()</td></tr>
 <tr class="separator:a775e141865e0de4dc3f3a39281cbcf02 inherit pro_methods_class_d3_d_app"><td class="memSeparator" colspan="2">&#160;</td></tr>

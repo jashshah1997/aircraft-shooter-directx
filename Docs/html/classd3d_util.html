@@ -89,6 +89,18 @@ static Microsoft::WRL::ComPtr&lt; ID3D12Resource &gt;&#160;</td><td class="memIt
 <tr class="memitem:acac6acd838913d63466e4f0159bfe8b0"><td class="memItemLeft" align="right" valign="top"><a id="acac6acd838913d63466e4f0159bfe8b0" name="acac6acd838913d63466e4f0159bfe8b0"></a>
 static Microsoft::WRL::ComPtr&lt; ID3DBlob &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>CompileShader</b> (const std::wstring &amp;filename, const D3D_SHADER_MACRO *defines, const std::string &amp;entrypoint, const std::string &amp;target)</td></tr>
 <tr class="separator:acac6acd838913d63466e4f0159bfe8b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd39214703aeb7f771e8f50a4425270b"><td class="memItemLeft" align="right" valign="top"><a id="afd39214703aeb7f771e8f50a4425270b" name="afd39214703aeb7f771e8f50a4425270b"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>LoadImageDataFromFile</b> (BYTE **imageData, D3D12_RESOURCE_DESC &amp;resourceDescription, LPCWSTR filename, int &amp;bytesPerRow)</td></tr>
+<tr class="separator:afd39214703aeb7f771e8f50a4425270b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7e3cd90712ebfb8396b87d42ab8265d"><td class="memItemLeft" align="right" valign="top"><a id="ad7e3cd90712ebfb8396b87d42ab8265d" name="ad7e3cd90712ebfb8396b87d42ab8265d"></a>
+static DXGI_FORMAT&#160;</td><td class="memItemRight" valign="bottom"><b>GetDXGIFormatFromWICFormat</b> (WICPixelFormatGUID &amp;wicFormatGUID)</td></tr>
+<tr class="separator:ad7e3cd90712ebfb8396b87d42ab8265d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa1086be36c3a05ecefbe29a484e09e"><td class="memItemLeft" align="right" valign="top"><a id="a0fa1086be36c3a05ecefbe29a484e09e" name="a0fa1086be36c3a05ecefbe29a484e09e"></a>
+static WICPixelFormatGUID&#160;</td><td class="memItemRight" valign="bottom"><b>GetConvertToWICFormat</b> (WICPixelFormatGUID &amp;wicFormatGUID)</td></tr>
+<tr class="separator:a0fa1086be36c3a05ecefbe29a484e09e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10edee94f631d0647532ad867797ed4a"><td class="memItemLeft" align="right" valign="top"><a id="a10edee94f631d0647532ad867797ed4a" name="a10edee94f631d0647532ad867797ed4a"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>GetDXGIFormatBitsPerPixel</b> (DXGI_FORMAT &amp;dxgiFormat)</td></tr>
+<tr class="separator:a10edee94f631d0647532ad867797ed4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Common/<a class="el" href="d3d_util_8h_source.html">d3dUtil.h</a></li>

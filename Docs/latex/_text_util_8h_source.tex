@@ -1,0 +1,86 @@
+\hypertarget{_text_util_8h_source}{}\doxysection{Text\+Util.\+h}
+\label{_text_util_8h_source}\index{Project1/Project1/TextUtil.h@{Project1/Project1/TextUtil.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <DirectXMath.h>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <d3d12.h>}}
+\DoxyCodeLine{5 }
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{9 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_text_vertex}{TextVertex}} \{}
+\DoxyCodeLine{10     \mbox{\hyperlink{struct_text_vertex}{TextVertex}}(\textcolor{keywordtype}{float} r, \textcolor{keywordtype}{float} g, \textcolor{keywordtype}{float} b, \textcolor{keywordtype}{float} a, \textcolor{keywordtype}{float} u, \textcolor{keywordtype}{float} v, \textcolor{keywordtype}{float} tw, \textcolor{keywordtype}{float} th, \textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} w, \textcolor{keywordtype}{float} h) }
+\DoxyCodeLine{11         : color(r, g, b, a), texCoord(u, v, tw, th), pos(x, y, w, h) \{\}}
+\DoxyCodeLine{12     DirectX::XMFLOAT4 pos;}
+\DoxyCodeLine{13     DirectX::XMFLOAT4 texCoord;}
+\DoxyCodeLine{14     DirectX::XMFLOAT4 color;}
+\DoxyCodeLine{15 \};}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{18 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_font_char}{FontChar}}}
+\DoxyCodeLine{19 \{}
+\DoxyCodeLine{21     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_char_a7a9a79398e34d6719766c64e28a7b766}{id}};}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{26     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a9cb7c48143c7962ffad244591639bb34}{u}};}
+\DoxyCodeLine{28     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a9ba7d561025c4f6058b41352216fc1ca}{v}}; }
+\DoxyCodeLine{30     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a990b9c74394fe7c56ce1442f83039ab0}{twidth}}; }
+\DoxyCodeLine{32     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a1570a117a9357df466bc30bf34cf4796}{theight}}; }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{35     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_ab849d58897a8433804531884014ebffe}{width}}; }
+\DoxyCodeLine{37     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a713f8b955b91876fa80fc8dfca2e5005}{height}}; }
+\DoxyCodeLine{38 }
+\DoxyCodeLine{41     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_ab026cd4e6bd2e7ed15852151d38fd23a}{xoffset}}; }
+\DoxyCodeLine{43     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a67b2dda1217f38272cb4518cc395458c}{yoffset}}; }
+\DoxyCodeLine{45     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_char_a6daca00ccf0829714b0e05219a52f391}{xadvance}}; }
+\DoxyCodeLine{46 \};}
+\DoxyCodeLine{47 }
+\DoxyCodeLine{49 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_font_kerning}{FontKerning}}}
+\DoxyCodeLine{50 \{}
+\DoxyCodeLine{52     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_kerning_ace0a1ea3a8395bc90dc81832f38aa2d4}{firstid}}; }
+\DoxyCodeLine{54     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_kerning_a26d9f1da9d81ddf0dc0a97928e0d33bb}{secondid}}; }
+\DoxyCodeLine{56     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_kerning_a645189c886317c70f9ab76ea0f272566}{amount}}; }
+\DoxyCodeLine{57 \};}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{60 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_font}{Font}}}
+\DoxyCodeLine{61 \{}
+\DoxyCodeLine{63     std::wstring \mbox{\hyperlink{struct_font_a893d49e8449aa075bb71f723257416f7}{name}}; }
+\DoxyCodeLine{64     std::wstring fontImage;}
+\DoxyCodeLine{66     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_aad7fe43db0254eccdbdaa2bf4884a140}{size}}; }
+\DoxyCodeLine{68     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_a2680c352e5edb4d7bd3616b58e185086}{lineHeight}};}
+\DoxyCodeLine{70     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_a6732dbb3d443555f794cc7365e1211d3}{baseHeight}};}
+\DoxyCodeLine{72     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_a6f32f6ace683de97f4f59a84af77622a}{textureWidth}}; }
+\DoxyCodeLine{74     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_a053acc1664fb0fec0d608d03b8b2333c}{textureHeight}}; }
+\DoxyCodeLine{76     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_a63afee0b3ef097fefb146bcd761da65d}{numCharacters}}; }
+\DoxyCodeLine{78     \mbox{\hyperlink{struct_font_char}{FontChar}}* \mbox{\hyperlink{struct_font_a43b9caf1f0b0cd8db7e27c1926edf59d}{CharList}};}
+\DoxyCodeLine{80     \textcolor{keywordtype}{int} \mbox{\hyperlink{struct_font_adb58b701f48c41bbc6cd5889afa2c389}{numKernings}}; }
+\DoxyCodeLine{82     \mbox{\hyperlink{struct_font_kerning}{FontKerning}}* \mbox{\hyperlink{struct_font_ad8ce0a1082456830396f8f2178b9d6a6}{KerningsList}}; }
+\DoxyCodeLine{84     ID3D12Resource* \mbox{\hyperlink{struct_font_afaeefcecf4569f492f2db26df1598d74}{textureBuffer}}; }
+\DoxyCodeLine{86     D3D12\_GPU\_DESCRIPTOR\_HANDLE \mbox{\hyperlink{struct_font_a36e64a767faac061eda1a98fd980ee24}{srvHandle}}; }
+\DoxyCodeLine{87 }
+\DoxyCodeLine{92     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_abce9f83762009d3700d9be12e763f0da}{leftpadding}};}
+\DoxyCodeLine{93     \textcolor{keywordtype}{float} toppadding;}
+\DoxyCodeLine{94     \textcolor{keywordtype}{float} rightpadding;}
+\DoxyCodeLine{95     \textcolor{keywordtype}{float} bottompadding;}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{98     \textcolor{keywordtype}{float} \mbox{\hyperlink{struct_font_a994bdd66bafcb424027084cc3f793556}{GetKerning}}(\textcolor{keywordtype}{wchar\_t} first, \textcolor{keywordtype}{wchar\_t} second)}
+\DoxyCodeLine{99     \{}
+\DoxyCodeLine{100         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{struct_font_adb58b701f48c41bbc6cd5889afa2c389}{numKernings}}; ++i)}
+\DoxyCodeLine{101         \{}
+\DoxyCodeLine{102             \textcolor{keywordflow}{if} ((\textcolor{keywordtype}{wchar\_t})\mbox{\hyperlink{struct_font_ad8ce0a1082456830396f8f2178b9d6a6}{KerningsList}}[i].firstid == first \&\& (\textcolor{keywordtype}{wchar\_t})\mbox{\hyperlink{struct_font_ad8ce0a1082456830396f8f2178b9d6a6}{KerningsList}}[i].secondid == second)}
+\DoxyCodeLine{103                 \textcolor{keywordflow}{return} \mbox{\hyperlink{struct_font_ad8ce0a1082456830396f8f2178b9d6a6}{KerningsList}}[i].\mbox{\hyperlink{struct_font_kerning_a645189c886317c70f9ab76ea0f272566}{amount}};}
+\DoxyCodeLine{104         \}}
+\DoxyCodeLine{105         \textcolor{keywordflow}{return} 0.0f;}
+\DoxyCodeLine{106     \}}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{109     \mbox{\hyperlink{struct_font_char}{FontChar}}* \mbox{\hyperlink{struct_font_a2416c72055d93a80707d084caa5b436e}{GetChar}}(\textcolor{keywordtype}{wchar\_t} c)}
+\DoxyCodeLine{110     \{}
+\DoxyCodeLine{111         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{struct_font_a63afee0b3ef097fefb146bcd761da65d}{numCharacters}}; ++i)}
+\DoxyCodeLine{112         \{}
+\DoxyCodeLine{113             \textcolor{keywordflow}{if} (c == (\textcolor{keywordtype}{wchar\_t})\mbox{\hyperlink{struct_font_a43b9caf1f0b0cd8db7e27c1926edf59d}{CharList}}[i].\textcolor{keywordtype}{id})}
+\DoxyCodeLine{114                 \textcolor{keywordflow}{return} \&\mbox{\hyperlink{struct_font_a43b9caf1f0b0cd8db7e27c1926edf59d}{CharList}}[i];}
+\DoxyCodeLine{115         \}}
+\DoxyCodeLine{116         \textcolor{keywordflow}{return} \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118 \};}
+
+\end{DoxyCode}

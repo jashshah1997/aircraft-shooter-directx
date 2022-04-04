@@ -96,8 +96,6 @@ void World::draw(States::ID id)
 		mTitleSprite->setPosition(0, -1, 0);
 		mTransparent->setPosition(0, -2, 0);
 		break;
-	case States::ID::Loading:
-		break;
 	case States::ID::Pause:
 		mTransparent->setPosition(0, 2, 0);
 		break;

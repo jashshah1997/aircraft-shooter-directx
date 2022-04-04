@@ -5,6 +5,7 @@
 class Game;
 class GameTimer;
 
+//! This class describes the title state behaviour
 class TitleState : public State
 {
 public:

@@ -1,0 +1,65 @@
+\hypertarget{struct_font_char}{}\doxysection{Font\+Char Struct Reference}
+\label{struct_font_char}\index{FontChar@{FontChar}}
+
+
+A structure containing information about the text character.  
+
+
+
+
+{\ttfamily \#include $<$Text\+Util.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_font_char_a7a9a79398e34d6719766c64e28a7b766}\label{struct_font_char_a7a9a79398e34d6719766c64e28a7b766}} 
+int {\bfseries id}
+\begin{DoxyCompactList}\small\item\em the unicode id \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_font_char_a9cb7c48143c7962ffad244591639bb34}{u}}
+\item 
+\mbox{\Hypertarget{struct_font_char_a9ba7d561025c4f6058b41352216fc1ca}\label{struct_font_char_a9ba7d561025c4f6058b41352216fc1ca}} 
+float {\bfseries v}
+\begin{DoxyCompactList}\small\item\em v texture coordinate \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_char_a990b9c74394fe7c56ce1442f83039ab0}\label{struct_font_char_a990b9c74394fe7c56ce1442f83039ab0}} 
+float {\bfseries twidth}
+\begin{DoxyCompactList}\small\item\em width of character on texture \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_char_a1570a117a9357df466bc30bf34cf4796}\label{struct_font_char_a1570a117a9357df466bc30bf34cf4796}} 
+float {\bfseries theight}
+\begin{DoxyCompactList}\small\item\em height of character on texture \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_char_ab849d58897a8433804531884014ebffe}\label{struct_font_char_ab849d58897a8433804531884014ebffe}} 
+float {\bfseries width}
+\begin{DoxyCompactList}\small\item\em width of character in screen coords \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_char_a713f8b955b91876fa80fc8dfca2e5005}\label{struct_font_char_a713f8b955b91876fa80fc8dfca2e5005}} 
+float {\bfseries height}
+\begin{DoxyCompactList}\small\item\em height of character in screen coords \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{struct_font_char_ab026cd4e6bd2e7ed15852151d38fd23a}{xoffset}}
+\item 
+\mbox{\Hypertarget{struct_font_char_a67b2dda1217f38272cb4518cc395458c}\label{struct_font_char_a67b2dda1217f38272cb4518cc395458c}} 
+float {\bfseries yoffset}
+\begin{DoxyCompactList}\small\item\em offset from top of line to top of character \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_font_char_a6daca00ccf0829714b0e05219a52f391}\label{struct_font_char_a6daca00ccf0829714b0e05219a52f391}} 
+float {\bfseries xadvance}
+\begin{DoxyCompactList}\small\item\em how far to move to right for next character \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A structure containing information about the text character. 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_font_char_a9cb7c48143c7962ffad244591639bb34}\label{struct_font_char_a9cb7c48143c7962ffad244591639bb34}} 
+\index{FontChar@{FontChar}!u@{u}}
+\index{u@{u}!FontChar@{FontChar}}
+\doxysubsubsection{\texorpdfstring{u}{u}}
+{\footnotesize\ttfamily float Font\+Char\+::u}
+
+these need to be converted to texture coordinates (where 0.\+0 is 0 and 1.\+0 is texture\+Width of the font) u texture coordinate \mbox{\Hypertarget{struct_font_char_ab026cd4e6bd2e7ed15852151d38fd23a}\label{struct_font_char_ab026cd4e6bd2e7ed15852151d38fd23a}} 
+\index{FontChar@{FontChar}!xoffset@{xoffset}}
+\index{xoffset@{xoffset}!FontChar@{FontChar}}
+\doxysubsubsection{\texorpdfstring{xoffset}{xoffset}}
+{\footnotesize\ttfamily float Font\+Char\+::xoffset}
+
+these need to be normalized based on size of font offset from current cursor pos to left side of character 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Project1/\+Project1/Text\+Util.\+h\end{DoxyCompactItemize}

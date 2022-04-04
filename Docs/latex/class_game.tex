@@ -24,6 +24,9 @@ Inheritance diagram for Game\+:\begin{figure}[H]
 \item 
 virtual bool \mbox{\hyperlink{class_game_a16354d232327f6c21319713bf6983674}{Initialize}} () override
 \item 
+\mbox{\Hypertarget{class_game_acae2fc6ed9458cb5b5229e3e08cd2b32}\label{class_game_acae2fc6ed9458cb5b5229e3e08cd2b32}} 
+void {\bfseries Render\+Text} (\mbox{\hyperlink{struct_font}{Font}} font, std\+::wstring text, XMFLOAT2 pos, XMFLOAT2 scale=XMFLOAT2(1.\+0f, 1.\+0f), std\+::vector$<$ XMFLOAT4 $>$ color=\{ XMFLOAT4(1.\+0f, 1.\+0f, 1.\+0f, 1.\+0f) \}, XMFLOAT2 padding=XMFLOAT2(0.\+5f, 0.\+0f))
+\begin{DoxyCompactList}\small\item\em Render text on screen. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_game_aab13f3fdd19f7fec4d64922e36cf3088}\label{class_game_aab13f3fdd19f7fec4d64922e36cf3088}} 
 std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{struct_render_item}{Render\+Item}} $>$ $>$ \& {\bfseries get\+Render\+Items} ()
 \item 
@@ -33,6 +36,12 @@ std\+::unordered\+\_\+map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ \mbox{\hyp
 \mbox{\Hypertarget{class_game_a8fecc6dedc120a94d9940ad5d7518242}\label{class_game_a8fecc6dedc120a94d9940ad5d7518242}} 
 std\+::unordered\+\_\+map$<$ std\+::string, std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{struct_mesh_geometry}{Mesh\+Geometry}} $>$ $>$ \& {\bfseries get\+Geometries} ()
 \end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_game_a652a742bc682ee577c453d4b8815f4ea}\label{class_game_a652a742bc682ee577c453d4b8815f4ea}} 
+\mbox{\hyperlink{struct_font}{Font}} {\bfseries m\+Arial\+Font}
+\begin{DoxyCompactList}\small\item\em this will store our arial font information \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Additional Inherited Members}
 
 

@@ -8,51 +8,60 @@
 \DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}SpriteNode.h"{}}}
 \DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}InputCommandQueue.h"{}}}
 \DoxyCodeLine{6 \textcolor{preprocessor}{\#include "{}Bullet.h"{}}}
-\DoxyCodeLine{7 }
-\DoxyCodeLine{9 \textcolor{keyword}{class }\mbox{\hyperlink{class_world}{World}} }
-\DoxyCodeLine{10 \{}
-\DoxyCodeLine{11 \textcolor{keyword}{public}:}
-\DoxyCodeLine{12     \textcolor{keyword}{explicit}                            \mbox{\hyperlink{class_world}{World}}(\mbox{\hyperlink{class_game}{Game}}* window);}
-\DoxyCodeLine{13 }
-\DoxyCodeLine{15     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_a36c003f54e14e022a360551af5e7923e}{update}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
-\DoxyCodeLine{16 }
-\DoxyCodeLine{18     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_ab51a17ccbb108616daacd0c34973dc8d}{draw}}();}
-\DoxyCodeLine{19 }
-\DoxyCodeLine{20     \textcolor{comment}{//void                              loadTextures();}}
-\DoxyCodeLine{21 }
-\DoxyCodeLine{23     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_ae7df49f5d488e5cd1254bf360966f410}{buildScene}}();}
-\DoxyCodeLine{24 }
-\DoxyCodeLine{26     \mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}\&                 \mbox{\hyperlink{class_world_a451d938bec826a474201db7975f2e774}{getInputCommandQueue}}();}
-\DoxyCodeLine{27 }
-\DoxyCodeLine{28 \textcolor{keyword}{private}:}
-\DoxyCodeLine{29     \textcolor{keyword}{enum} Layer}
-\DoxyCodeLine{30     \{}
-\DoxyCodeLine{31         Background,}
-\DoxyCodeLine{32         Air,}
-\DoxyCodeLine{33         LayerCount}
-\DoxyCodeLine{34     \};}
-\DoxyCodeLine{35 }
-\DoxyCodeLine{36 }
-\DoxyCodeLine{37 \textcolor{keyword}{private}:}
-\DoxyCodeLine{38     \mbox{\hyperlink{class_game}{Game}}*                               mGame;}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include "{}StateIdentifiers.h"{}}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_world}{World}} }
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13     \textcolor{keyword}{explicit}                            \mbox{\hyperlink{class_world}{World}}(\mbox{\hyperlink{class_game}{Game}}* window);}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{16     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_a36c003f54e14e022a360551af5e7923e}{update}}(\textcolor{keyword}{const} \mbox{\hyperlink{class_game_timer}{GameTimer}}\& gt);}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{19     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_a98c3b35db0e465b57feee99775fb9a93}{draw}}(States::ID \textcolor{keywordtype}{id});}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21     \textcolor{comment}{//void                              loadTextures();}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{24     \textcolor{keywordtype}{void}                                \mbox{\hyperlink{class_world_ae7df49f5d488e5cd1254bf360966f410}{buildScene}}();}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{27     \mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}\&                 \mbox{\hyperlink{class_world_a451d938bec826a474201db7975f2e774}{getInputCommandQueue}}();}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     \textcolor{keywordtype}{void}                                reset();}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{keyword}{private}:}
+\DoxyCodeLine{32     \textcolor{keyword}{enum} Layer}
+\DoxyCodeLine{33     \{}
+\DoxyCodeLine{34         Background,}
+\DoxyCodeLine{35         Air,}
+\DoxyCodeLine{36         LayerCount}
+\DoxyCodeLine{37     \};}
+\DoxyCodeLine{38 }
 \DoxyCodeLine{39 }
-\DoxyCodeLine{40     \mbox{\hyperlink{class_scene_node}{SceneNode}}*                         mSceneGraph;}
-\DoxyCodeLine{41     std::array<SceneNode*, LayerCount>  mSceneLayers;}
-\DoxyCodeLine{42     XMFLOAT4                            mWorldBounds;}
-\DoxyCodeLine{43     XMFLOAT2                            mSpawnPosition;}
-\DoxyCodeLine{44 }
-\DoxyCodeLine{46     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mPlayerAircraft;}
+\DoxyCodeLine{40 \textcolor{keyword}{private}:}
+\DoxyCodeLine{41     \mbox{\hyperlink{class_game}{Game}}*                               mGame;}
+\DoxyCodeLine{42 }
+\DoxyCodeLine{43     \mbox{\hyperlink{class_scene_node}{SceneNode}}*                         mSceneGraph;}
+\DoxyCodeLine{44     \mbox{\hyperlink{class_scene_node}{SceneNode}}*                         mTitleGraph;}
+\DoxyCodeLine{45     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mTitleSprite;}
+\DoxyCodeLine{46     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mTransparent;}
 \DoxyCodeLine{47 }
-\DoxyCodeLine{49     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy;}
-\DoxyCodeLine{50     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy2;}
+\DoxyCodeLine{48     std::array<SceneNode*, LayerCount>  mSceneLayers;}
+\DoxyCodeLine{49     XMFLOAT4                            mWorldBounds;}
+\DoxyCodeLine{50     XMFLOAT2                            mSpawnPosition;}
 \DoxyCodeLine{51 }
-\DoxyCodeLine{53     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground;}
-\DoxyCodeLine{54     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground2;}
-\DoxyCodeLine{55     \textcolor{keywordtype}{float}                               mScrollSpeed;}
+\DoxyCodeLine{53     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mPlayerAircraft;}
+\DoxyCodeLine{54     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mPlayerAircraft1;}
+\DoxyCodeLine{55     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mPlayerAircraft2;}
 \DoxyCodeLine{56 }
-\DoxyCodeLine{58     std::vector<Bullet*>                mBulletSpriteVector;}
-\DoxyCodeLine{59 }
-\DoxyCodeLine{61     \mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}                  mInputCommandQueue;}
-\DoxyCodeLine{62 \};}
+\DoxyCodeLine{58     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy;}
+\DoxyCodeLine{59     \mbox{\hyperlink{class_aircraft}{Aircraft}}*                           mEnemy2;}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{62     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground;}
+\DoxyCodeLine{63     \mbox{\hyperlink{class_sprite_node}{SpriteNode}}*                           mBackground2;}
+\DoxyCodeLine{64     \textcolor{keywordtype}{float}                               mScrollSpeed;}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{67     std::vector<Bullet*>                mBulletSpriteVector;}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{70     \mbox{\hyperlink{class_input_command_queue}{InputCommandQueue}}                  mInputCommandQueue;}
+\DoxyCodeLine{71 \};}
 
 \end{DoxyCode}

@@ -5,6 +5,7 @@
 class Game;
 class GameTimer;
 
+//! This class describes the state of the game during the main menu
 class MenuState : public State
 {
 public:
