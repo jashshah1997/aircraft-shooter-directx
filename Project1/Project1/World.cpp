@@ -110,7 +110,11 @@ void World::draw(States::ID id)
 void World::reset()
 {
 	mEnemy->setPosition(2, 0.5, 0);
+	mEnemy->setVelocity(0, 0, 0);
+
 	mEnemy2->setPosition(-2, 0.5, 0);
+	mEnemy2->setVelocity(0, 0, 0);
+
 	mPlayerAircraft->setPosition(0, 1, -1.0);
 	mPlayerAircraft1->setPosition(2, 0.5, -1.5);
 	mPlayerAircraft2->setPosition(-2, 0.5, -1.5);
